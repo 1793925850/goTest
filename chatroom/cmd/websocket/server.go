@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"nhooyr.io/websocket"
+	"nhooyr.io/websocket" // websocket是Go的一个最小且惯用的websocket库
 )
 
 func main() {
