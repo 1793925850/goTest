@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"nhooyr.io/websocket/wsjson"
 	"time"
 
-	"nhooyr.io/websocket" // websocket 是 Go 的一个最小且惯用的 websocket 库
+	"nhooyr.io/websocket"        // websocket 是 Go 的一个最小且惯用的 websocket 库
+	"nhooyr.io/websocket/wsjson" // wsjson 包用于写入和读取 JSON 消息
 )
 
 func main() {
@@ -17,7 +17,7 @@ func main() {
 	// 客户端的请求信息都封装到了 Request 对象：客户端->服务器端
 	// 发送给客户端的响应封装到了 ResponseWriter 对象：服务器端->客户端
 	// HTTP 在每次请求结束后都会主动释放连接
-	// 套接字相当于管道，比 Http 快
+	// Socket是传输控制层协议，WebSocket是应用层协议
 
 	// "/" 表示客户端通过 HTTP 向服务器端发送数据，服务器端需要接收并处理
 	http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) { // 对 / 的请求“走” HTTP
@@ -41,14 +41,14 @@ func main() {
 
 		// v 是一个接口变量
 		var v interface{}
-		err = wsjson.Read(ctx, conn, &v)
+		err = wsjson.Read(ctx, conn, &v) // 读取 JSON 消息
 		if err != nil {
 			log.Println(err)
 			return
 		}
 		log.Printf("接收到客户端：%v\n", v)
 
-		err = wsjson.Write(ctx, conn, v)
+		err = wsjson.Write(ctx, conn, v) // 写入 JSON 消息
 		if err != nil {
 			log.Println(err)
 			return
