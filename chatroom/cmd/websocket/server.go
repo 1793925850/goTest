@@ -58,6 +58,6 @@ func main() {
 		conn.Close(websocket.StatusNormalClosure, "")
 	})
 
-	// ListenAndServe 用于在指定的 TCP 网络地址(也就是客户端)进行监听，然后调用服务端处理程序来处理传入的请求
+	// ListenAndServe 用于在指定的 TCP 网络地址(也就是客户端)进行监听，然后调用服务端处理程序来处理传入的
 	log.Fatal(http.ListenAndServe(":2021", nil))
 }
