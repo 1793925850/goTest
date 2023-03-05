@@ -11,7 +11,7 @@ var (
    |    |    | /----\   |
    |____|    |/      \  |
 
-	ChatRoom, start on: %s
+  	ChatRoom, start on: %s
 `
 )
 
