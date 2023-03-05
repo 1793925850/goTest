@@ -41,14 +41,14 @@ func main() {
 
 		// v 是一个接口变量
 		var v interface{}
-		err = wsjson.Read(ctx, conn, &v) // 读取 JSON 消息
+		err = wsjson.Read(ctx, conn, &v) // 读取 JSON 消息放到 v 里面
 		if err != nil {
 			log.Println(err)
 			return
 		}
 		log.Printf("接收到客户端：%v\n", v)
 
-		err = wsjson.Write(ctx, conn, v) // 写入 JSON 消息
+		err = wsjson.Write(ctx, conn, v) // 将 v 里的消息写入 JSON 消息
 		if err != nil {
 			log.Println(err)
 			return
