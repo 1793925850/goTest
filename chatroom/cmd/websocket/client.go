@@ -13,7 +13,7 @@ import (
 // 就单纯发送个消息
 
 func main() {
-	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Minute) // 设置了一个运行的时间限制，也就是限制了每一次连接或发送请求的时间
 	defer cancel()
 
 	c, _, err := websocket.Dial(ctx, "ws://localhost:2021/ws", nil) // 这是服务器端的端口号，现在用的是主机，到时候得换
