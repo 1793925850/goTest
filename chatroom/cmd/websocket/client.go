@@ -9,9 +9,6 @@ import (
 	"nhooyr.io/websocket/wsjson"
 )
 
-// http 服务器端默认监听在80端口
-// 因此，抓包只需要监听客户端的指定端口就行
-
 func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
