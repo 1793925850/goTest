@@ -24,7 +24,7 @@ func initConfig() {
 	SensitiveWords = viper.GetStringSlice("sensitive") // 提供敏感词
 	MessageQueueLen = viper.GetInt("message-queue")    // 提供消息队列长度
 
-	viper.WatchConfig() // WatchConfig 监视配置文件的更改
+	viper.WatchConfig()                           // WatchConfig 监视配置文件的更改
 	viper.OnConfigChange(func(e fsnotify.Event) { // 当一个配置文件被改动时，OnConfigChange 用来设置这个 event 的 handler
 		viper.ReadInConfig() // 在指定路径下加载配置文件
 
