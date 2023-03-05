@@ -12,6 +12,7 @@ import (
 // 这个 exe 一瞬间执行完
 // 就单纯发送个消息
 
+// websocket 的一个练手，并非聊天室真正部分
 func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute) // 设置了一个运行的时间限制，也就是限制了每一次连接或发送请求的时间
 	defer cancel()

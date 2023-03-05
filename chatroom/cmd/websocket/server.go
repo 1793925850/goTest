@@ -11,6 +11,7 @@ import (
 	"nhooyr.io/websocket/wsjson" // wsjson 包用于写入和读取 JSON 消息
 )
 
+// websocket 的一个练手，并非聊天室真正部分
 func main() {
 	// HandleFunc 的功能是绑定路由(第一个参数)和处理器函数(也就是第二个参数)，并注册到 DefaultServeMux 的 map 内
 	// 这样才能根据 URL 匹配到对应的函数
