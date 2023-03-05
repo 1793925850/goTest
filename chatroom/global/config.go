@@ -1,7 +1,7 @@
 package global
 
 import (
-	"github.com/fsnotify/fsnotify"
+	"github.com/fsnotify/fsnotify" // fsnotify 库用于在系统上提供跨平台文件系统通知
 	"github.com/spf13/viper"
 )
 
