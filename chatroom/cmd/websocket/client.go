@@ -17,6 +17,7 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute) // 设置了一个运行的时间限制，也就是限制了每一次连接或发送请求的时间
 	defer cancel()
 
+	// 请求连接操作不是并发
 	c, _, err := websocket.Dial(ctx, "ws://localhost:2021/ws", nil) // 这是服务器端的端口号，现在用的是主机，到时候得换
 	if err != nil {
 		panic(err)

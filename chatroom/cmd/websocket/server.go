@@ -20,8 +20,11 @@ func main() {
 	// HTTP 在每次请求结束后都会主动释放连接
 	// Socket是传输控制层协议，WebSocket是应用层协议
 
+	// http.HandleFunc 是并发操作
+
 	// "/" 表示客户端通过 HTTP 向服务器端发送数据，服务器端需要接收并处理
 	http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) { // 对 / 的请求“走” HTTP
+		// w 就是服务器端向客户端发送的数据报
 		fmt.Fprintln(w, "HTTP, Hello") // 将 HTTP, Hello 写入 w 中
 	})
 
