@@ -2,7 +2,7 @@ package global
 
 import (
 	"github.com/fsnotify/fsnotify" // fsnotify 库用于在系统上提供跨平台文件系统通知
-	"github.com/spf13/viper"
+	"github.com/spf13/viper"       // viper 库是一个完整的配置文件解决方案，用于处理所有类型的配置需求和格式
 )
 
 var (
