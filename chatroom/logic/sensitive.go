@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"strings"
+	"strings" // strings 包用来对 string 进行操作
 
 	"chatroom/global"
 )
