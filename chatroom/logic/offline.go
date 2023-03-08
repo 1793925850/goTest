@@ -27,3 +27,28 @@ func newOfflineProcessor() *offlineProcessor {
 		userRing:   make(map[string]*ring.Ring),
 	}
 }
+
+func (o *offlineProcessor) Save(msg *Message) {
+	if msg.Type != MsgTypeNormal {
+		return
+	}
+
+	o.recentRing.Value = msg
+	o.recentRing = o.recentRing.Next()
+
+	for _, nickname := range msg.Ats {
+		nickname = nickname[1:]
+
+		var (
+			r  *ring.Ring
+			ok bool
+		)
+
+		if r, ok = o.userRing[nickname]; !ok {
+			r = ring.New(o.n)
+		}
+
+		r.Value = msg
+		o.userRing[nickname] = r.Next()
+	}
+}
