@@ -15,6 +15,8 @@ func calcMessageQueueLen() interface{} {
 
 // 广播器
 type broadcaster struct {
+	// 所有聊天室用户
+	users map[string]*User
 }
 
 var Broadcaster = &broadcaster{}
