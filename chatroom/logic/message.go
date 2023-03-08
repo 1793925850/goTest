@@ -1,6 +1,9 @@
 package logic
 
-import "time"
+import (
+	"github.com/spf13/cast"
+	"time"
+)
 
 const (
 	MsgTypeNormal    = iota // 普通用户消息
@@ -26,3 +29,26 @@ type Message struct {
 	// 用户列表不通过 WebSocket 下发
 	// Users [] *User `json:"users"`
 }
+
+func NewMessage(user *User, content, clientTime string) *Message {
+	message := &Message{
+		User:    user,
+		Type:    MsgTypeNormal,
+		Content: content,
+		MsgTime: time.Now(),
+	}
+
+	if clientTime != "" {
+		message.ClientSendTime = time.Unix(0, cast.ToInt64(clientTime))
+	}
+
+	return message
+}
+
+func NewWelcomeMessage() *Message {}
+
+func NewUserEnterMessage() *Message {}
+
+func NewUserLeaveMessage() *Message {}
+
+func NewErrorMessage() *Message {}
