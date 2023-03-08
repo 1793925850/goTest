@@ -2,11 +2,17 @@ package logic
 
 import (
 	"context"
+	"encoding/base64"
 	"errors"
+	"fmt"
 	"io"
+	"regexp"
+	"strings"
 	"sync/atomic"
 	"time"
 
+	"github.com/spf13/cast"
+	"github.com/spf13/viper"
 	"nhooyr.io/websocket"
 	"nhooyr.io/websocket/wsjson"
 )
@@ -92,13 +98,40 @@ func (u *User) ReceiveMessage(ctx context.Context) error {
 
 			return err
 		}
+
+		// 内容发送到聊天室
+		sendMsg := NewMessage(u, receiveMsg["content"], receiveMsg["send_time"])
+		sendMsg.Content = FilterSensitive(sendMsg.Content)
+
+		// 解析 content，看看 @ 谁了
+		reg := regexp.MustCompile(`@[^\s@]{2,20}`)
+		sendMsg.Ats = reg.FindAllString(sendMsg.Content, -1)
+
+		Broadcaster.Broadcast(sendMsg)
 	}
 }
 
 func genToken(uid int, nickname string) string {
+	secret := viper.GetString("token-secret")
+	message := fmt.Sprintf("%s%s%d", nickname, secret, uid)
+
+	messageMAC := macSha256([]byte(message), []byte(secret))
+
+	return fmt.Sprintf("%suid%d", base64.StdEncoding.EncodeToString(messageMAC), uid)
+}
+
+func macSha256(bytes []byte, bytes2 []byte) interface{} {
 
 }
 
 func parseTokenAndValidate(token string, nickname string) (int, error) {
+	pos := strings.LastIndex(token, "uid")
+	messageMAC, err := base64.StdEncoding.DecodeString(token[:pos])
+	if err != nil {
+		return 0, err
+	}
+	uid := cast.ToInt(token[pos+3:])
 
+	secret := viper.GetString("token-secret")
+	message := fmt.Sprintf("%s%s%d", nickname, secret, uid)
 }
