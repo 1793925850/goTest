@@ -1,8 +1,9 @@
 package logic
 
 import (
-	"github.com/spf13/cast"
 	"time"
+
+	"github.com/spf13/cast"
 )
 
 const (
@@ -45,10 +46,38 @@ func NewMessage(user *User, content, clientTime string) *Message {
 	return message
 }
 
-func NewWelcomeMessage() *Message {}
+func NewWelcomeMessage(user *User) *Message {
+	return &Message{
+		User:    user,
+		Type:    MsgTypeWelcome,
+		Content: user.NickName + " 您好，欢迎加入聊天室！",
+		MsgTime: time.Now(),
+	}
+}
 
-func NewUserEnterMessage() *Message {}
+func NewUserEnterMessage(user *User) *Message {
+	return &Message{
+		User:    user,
+		Type:    MsgTypeUserEnter,
+		Content: user.NickName + " 加入了聊天室",
+		MsgTime: time.Now(),
+	}
+}
 
-func NewUserLeaveMessage() *Message {}
+func NewUserLeaveMessage(user *User) *Message {
+	return &Message{
+		User:    user,
+		Type:    MsgTypeUserLeave,
+		Content: user.NickName + " 离开了聊天室",
+		MsgTime: time.Now(),
+	}
+}
 
-func NewErrorMessage() *Message {}
+func NewErrorMessage(content string) *Message {
+	return &Message{
+		User:    System,
+		Type:    MsgTypeError,
+		Content: content,
+		MsgTime: time.Now(),
+	}
+}
