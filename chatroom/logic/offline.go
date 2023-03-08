@@ -52,3 +52,25 @@ func (o *offlineProcessor) Save(msg *Message) {
 		o.userRing[nickname] = r.Next()
 	}
 }
+
+func (o *offlineProcessor) Send(user *User) {
+	o.recentRing.Do(func(value interface{}) {
+		if value != nil {
+			user.MessageChannel <- value.(*Message)
+		}
+	})
+
+	if user.isNew {
+		return
+	}
+
+	if r, ok := o.userRing[user.NickName]; ok {
+		r.Do(func(value interface{}) {
+			if value != nil {
+				user.MessageChannel <- value.(*Message)
+			}
+		})
+
+		delete(o.userRing, user.NickName)
+	}
+}
