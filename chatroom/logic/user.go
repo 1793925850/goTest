@@ -118,6 +118,7 @@ func (u *User) ReceiveMessage(ctx context.Context) error {
 // ________________________________________________________________________________________________
 // 私有方法
 
+// 获得 token
 func genToken(uid int, nickname string) string {
 	secret := viper.GetString("token-secret")
 	message := fmt.Sprintf("%s%s%d", nickname, secret, uid)
@@ -154,6 +155,7 @@ func parseTokenAndValidate(token string, nickname string) (int, error) {
 	return 0, errors.New("token是不合法的")
 }
 
+// 验证MAC
 func validateMAC(message, messageMAC, secret []byte) bool {
 	mac := hmac.New(sha256.New, secret)
 	mac.Write(message)
