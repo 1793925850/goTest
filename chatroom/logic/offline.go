@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"container/ring"
+	"container/ring" // ring 实现了环形链表的操作
 
 	"github.com/spf13/viper"
 )
@@ -23,7 +23,7 @@ func newOfflineProcessor() *offlineProcessor {
 
 	return &offlineProcessor{
 		n:          n,
-		recentRing: ring.New(n),
+		recentRing: ring.New(n), // 创建了含有 n 个链表节点的环形链表
 		userRing:   make(map[string]*ring.Ring),
 	}
 }
@@ -34,10 +34,10 @@ func (o *offlineProcessor) Save(msg *Message) {
 	}
 
 	o.recentRing.Value = msg
-	o.recentRing = o.recentRing.Next()
+	o.recentRing = o.recentRing.Next() // 跳到写一个链表节点
 
 	for _, nickname := range msg.Ats {
-		nickname = nickname[1:]
+		nickname = nickname[1:] // 这里为什么从一开始？？？
 
 		var (
 			r  *ring.Ring
@@ -54,7 +54,7 @@ func (o *offlineProcessor) Save(msg *Message) {
 }
 
 func (o *offlineProcessor) Send(user *User) {
-	o.recentRing.Do(func(value interface{}) {
+	o.recentRing.Do(func(value interface{}) { // Do 按正向顺序调用环形链表的每个元素上的函数 f。
 		if value != nil {
 			user.MessageChannel <- value.(*Message)
 		}
@@ -71,6 +71,6 @@ func (o *offlineProcessor) Send(user *User) {
 			}
 		})
 
-		delete(o.userRing, user.NickName)
+		delete(o.userRing, user.NickName) // 删除某个用户的离线消息
 	}
 }
