@@ -101,7 +101,7 @@ func (b *broadcaster) UserLeaving(u *User) {
 	b.leavingChannel <- u
 }
 
-func (b *broadcaster) BroadCast(msg *Message) {
+func (b *broadcaster) Broadcast(msg *Message) {
 	if len(b.messageChannel) >= global.MessageQueueLen {
 		log.Println("广播队列满了！")
 	}
