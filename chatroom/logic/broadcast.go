@@ -3,6 +3,8 @@ package logic
 import (
 	"expvar"
 	"fmt"
+
+	"chatroom/global"
 )
 
 func init() {
@@ -15,7 +17,7 @@ func calcMessageQueueLen() interface{} {
 	return len(Broadcaster.messageChannel)
 }
 
-// 广播器
+// broadcaster 广播器
 type broadcaster struct {
 	// 所有聊天室用户
 	users map[string]*User
@@ -35,4 +37,30 @@ type broadcaster struct {
 	usersChannel        chan []*User
 }
 
-var Broadcaster = &broadcaster{}
+var Broadcaster = &broadcaster{
+	users: make(map[string]*User),
+
+	enteringChannel: make(chan *User),
+	leavingChannel:  make(chan *User),
+	messageChannel:  make(chan *Message, global.MessageQueueLen),
+
+	checkUserChannel:      make(chan string),
+	checkUserCanInChannel: make(chan bool),
+
+	requestUsersChannel: make(chan struct{}),
+	usersChannel:        make(chan []*User),
+}
+
+// Start 启动广播器
+// 需要在一个新 goroutine 中运行，因为它不会返回
+func (b *broadcaster) Start() {
+	for {
+		select {
+		case user := <-b.enteringChannel:
+			// 新用户进入
+			b.users[user.NickName] = user
+
+			OfflineProcessor.Send(user)
+		}
+	}
+}
