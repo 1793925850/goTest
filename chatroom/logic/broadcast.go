@@ -61,6 +61,31 @@ func (b *broadcaster) Start() {
 			b.users[user.NickName] = user
 
 			OfflineProcessor.Send(user)
+		case user := <-b.leavingChannel:
+			// 用户离开
+			delete(b.users, user.NickName)
+			// 避免 goroutine 泄露
+			user.CloseMessageChannel()
+		case msg := <-b.messageChannel:
+			// 给所有在线用户发送欢迎新用户消息消息
+			for _, user := range b.users {
+				if user.UID == msg.User.UID { // 排除掉新用户
+					continue
+				}
+				user.MessageChannel <- msg
+			}
+		case nickname := <-b.checkUserChannel:
+			if _, ok := b.users[nickname]; ok { // 如果该昵称已存在，则不让这个用户重复进入聊天室
+				b.checkUserCanInChannel <- false
+			} else {
+				b.checkUserCanInChannel <- true
+			}
+		case <-b.requestUsersChannel:
+			userList := make([]*User, 0, len(b.users))
+
+			for _, user := range b.users {
+				userList = append(userList, user)
+			}
 		}
 	}
 }
