@@ -2,10 +2,10 @@ package logic
 
 import (
 	"context"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/base64"
-	"errors"
+	"crypto/hmac"     // hmac 包实现了HMAC（加密哈希信息认证码）
+	"crypto/sha256"   // sha256 包实现了SHA224和SHA256哈希算法
+	"encoding/base64" // base64 包实现了RFC 4648规定的base64编码
+	"errors"          // errors 包实现了创建错误值的函数
 	"fmt"
 	"io"
 	"regexp"
