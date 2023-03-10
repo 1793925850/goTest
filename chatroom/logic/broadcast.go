@@ -3,6 +3,7 @@ package logic
 import (
 	"expvar"
 	"fmt"
+	"log"
 
 	"chatroom/global"
 )
@@ -33,8 +34,8 @@ type broadcaster struct {
 	checkUserCanInChannel chan bool
 
 	// 获取用户列表
-	requestUsersChannel chan struct{}
-	usersChannel        chan []*User
+	requestUsersChannel chan struct{} // 请求获取用户列表
+	usersChannel        chan []*User  // 用来传递用户列表
 }
 
 var Broadcaster = &broadcaster{
@@ -86,6 +87,35 @@ func (b *broadcaster) Start() {
 			for _, user := range b.users {
 				userList = append(userList, user)
 			}
+
+			b.usersChannel <- userList
 		}
 	}
+}
+
+func (b *broadcaster) UserEntering(u *User) {
+	b.enteringChannel <- u
+}
+
+func (b *broadcaster) UserLeaving(u *User) {
+	b.leavingChannel <- u
+}
+
+func (b *broadcaster) BroadCast(msg *Message) {
+	if len(b.messageChannel) >= global.MessageQueueLen {
+		log.Println("广播队列满了！")
+	}
+	b.messageChannel <- msg
+}
+
+func (b *broadcaster) CanEnterRoom(nickname string) bool {
+	b.checkUserChannel <- nickname
+
+	return <-b.checkUserCanInChannel
+}
+
+func (b *broadcaster) GetUserList() []*User {
+	b.requestUsersChannel <- struct{}{}
+
+	return <-b.usersChannel
 }
