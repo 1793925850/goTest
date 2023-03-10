@@ -8,9 +8,9 @@ import (
 	"errors"          // errors 包实现了创建错误值的函数
 	"fmt"
 	"io"
-	"regexp"
-	"strings"
-	"sync/atomic"
+	"regexp"      // regexp 包实现了正则表达式搜索
+	"strings"     // strings 包实现了用于操作字符的简单函数
+	"sync/atomic" // atomic 包提供了底层的原子级内存操作，对于同步算法的实现很有用
 	"time"
 
 	"github.com/spf13/cast"
