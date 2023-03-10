@@ -81,7 +81,7 @@ func (b *broadcaster) Start() {
 				b.checkUserCanInChannel <- true
 			}
 		case <-b.requestUsersChannel:
-			userList := make([]*User, 0, len(b.users))
+			userList := make([]*User, 0, len(b.users)) // make(type, len, cap)
 
 			for _, user := range b.users {
 				userList = append(userList, user)
