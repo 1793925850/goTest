@@ -79,7 +79,7 @@ func (u *User) SendMessage(ctx context.Context) {
 
 // CloseMessageChannel 避免 goroutine 泄露
 func (u *User) CloseMessageChannel() {
-	close(u.MessageChannel)
+	close(u.MessageChannel) // close 关闭一个只写或双向通道
 }
 
 // 用户接收信息
