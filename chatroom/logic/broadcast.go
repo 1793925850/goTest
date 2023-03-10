@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"expvar"
+	"expvar" // expvar 包提供了公共变量的标准接口
 	"fmt"
 	"log"
 
@@ -9,6 +9,8 @@ import (
 )
 
 func init() {
+	// Publish 声明一个导出变量
+	// Func 通过调用函数并将结果编码为json，实现了Var接口
 	expvar.Publish("message_queue", expvar.Func(calcMessageQueueLen))
 }
 
