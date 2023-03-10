@@ -13,10 +13,10 @@ import (
 	"sync/atomic" // atomic 包提供了底层的原子级内存操作，对于同步算法的实现很有用
 	"time"
 
-	"github.com/spf13/cast"
+	"github.com/spf13/cast" // cast 包用来进行不同类型之间的类型转换
 	"github.com/spf13/viper"
 	"nhooyr.io/websocket"
-	"nhooyr.io/websocket/wsjson"
+	"nhooyr.io/websocket/wsjson" // wsjson 包提供读和写 json 消息的帮助
 )
 
 // 需要使用 globalUID 来给每个用户创建一个 UID
