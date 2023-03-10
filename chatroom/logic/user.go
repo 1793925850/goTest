@@ -94,6 +94,8 @@ func (u *User) ReceiveMessage(ctx context.Context) error {
 		if err != nil {
 			// 判定连接是否关闭了，若是正常关闭，则不认为是错误
 			var closeErr websocket.CloseError
+			// errors.As 找到匹配目标错误的第一个错误
+			// errors.Is 报告错误树中的任何错误是否与目标匹配。
 			if errors.As(err, &closeErr) {
 				return nil
 			} else if errors.Is(err, io.EOF) {
