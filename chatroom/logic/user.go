@@ -30,11 +30,11 @@ type User struct {
 	EnterAt        time.Time     `json:"enter_at"`
 	Addr           string        `json:"addr"`
 	MessageChannel chan *Message `json:"-"`
-	Token          string        `json:"token"`
+	Token          string        `json:"token"` // 验证令牌
 
 	conn *websocket.Conn // 用户所对应的连接
 
-	isNew bool
+	isNew bool // 是否为新用户
 }
 
 // 系统也是一个用户，即系统用户，代表系统主动发送的消息
@@ -62,7 +62,7 @@ func NewUser(conn *websocket.Conn, token, nickname, addr string) *User {
 	}
 
 	if user.UID == 0 {
-		user.UID = int(atomic.AddUint32(&globalUID, 1))
+		user.UID = int(atomic.AddUint32(&globalUID, 1)) // AddUint32 原子性的将 delta 的值添加到 *addr 并返回新值
 		user.Token = genToken(user.UID, user.NickName)
 		user.isNew = true
 	}
