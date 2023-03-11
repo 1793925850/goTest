@@ -44,4 +44,8 @@ func WebSocketHandleFunc(w http.ResponseWriter, req *http.Request) {
 
 	// 2. 开启给用户发送消息的 goroutine
 	go userHasToken.SendMessage(req.Context())
+	// 注意：user 本身是在服务器端的，客户端的作用就是接收 conn 里的消息
+
+	// 3. 给当前用户发送欢迎信息
+	userHasToken.MessageChannel <- logic.NewWelcomeMessage(userHasToken)
 }

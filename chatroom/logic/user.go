@@ -29,7 +29,7 @@ type User struct {
 	NickName       string        `json:"nickname"`
 	EnterAt        time.Time     `json:"enter_at"`
 	Addr           string        `json:"addr"`
-	MessageChannel chan *Message `json:"-"`
+	MessageChannel chan *Message `json:"-"`     // 给用户发的消息所使用的消息通道
 	Token          string        `json:"token"` // 验证令牌
 
 	conn *websocket.Conn // 用户所对应的连接
