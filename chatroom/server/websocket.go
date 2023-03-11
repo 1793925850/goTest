@@ -62,4 +62,7 @@ func WebSocketHandleFunc(w http.ResponseWriter, req *http.Request) {
 	// 4. 将该用户加入广播器的用户进入列表中
 	logic.Broadcaster.UserEntering(user)
 	log.Println("user:", nickname, "进入聊天室")
+
+	// 5. 接收用户消息
+	err = user.ReceiveMessage(req.Context())
 }

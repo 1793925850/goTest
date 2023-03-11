@@ -82,7 +82,7 @@ func (u *User) CloseMessageChannel() {
 	close(u.MessageChannel) // close 关闭一个只写或双向通道
 }
 
-// 用户接收信息
+// 接收用户信息
 func (u *User) ReceiveMessage(ctx context.Context) error {
 	var (
 		receiveMsg map[string]string
