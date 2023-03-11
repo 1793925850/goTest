@@ -123,7 +123,7 @@ func (u *User) ReceiveMessage(ctx context.Context) error {
 // 获得 token(即令牌)
 func genToken(uid int, nickname string) string {
 	secret := viper.GetString("token-secret")
-	message := fmt.Sprintf("%s%s%d", nickname, secret, uid)
+	message := fmt.Sprintf("%s%s%d", nickname, secret, uid) // 转换成字符串
 
 	messageMAC := macSha256([]byte(message), []byte(secret))
 
