@@ -1,6 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"chatroom/global"
+	"chatroom/server"
+	"fmt"
+	"log"
+	"net/http"
+)
 
 var (
 	addr   = ":2022"
@@ -15,7 +21,14 @@ var (
 `
 )
 
+func init() {
+	global.Init()
+}
+
 func main() {
 	fmt.Printf(banner, addr)
-	
+
+	server.RegisterHandle()
+
+	log.Fatal(http.ListenAndServe(addr, nil))
 }
