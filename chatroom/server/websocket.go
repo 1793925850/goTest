@@ -48,4 +48,18 @@ func WebSocketHandleFunc(w http.ResponseWriter, req *http.Request) {
 
 	// 3. 给当前用户发送欢迎信息
 	userHasToken.MessageChannel <- logic.NewWelcomeMessage(userHasToken)
+
+	// 避免 token 泄露
+	tmpUser := *userHasToken // tmpUser 的类型是 **User
+	user := &tmpUser         // user 的类型是 *User
+	user.Token = ""
+
+	// 向所有用户告知新用户的到来
+	msg := logic.NewUserEnterMessage(user)
+	// 广播器就一个
+	logic.Broadcaster.Broadcast(msg)
+
+	// 4. 将该用户加入广播器的用户进入列表中
+	logic.Broadcaster.UserEntering(user)
+	log.Println("user:", nickname, "进入聊天室")
 }
