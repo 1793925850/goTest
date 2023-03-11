@@ -4,7 +4,10 @@ import (
 	"log"
 	"net/http"
 
+	"chatroom/logic"
+
 	"nhooyr.io/websocket"
+	"nhooyr.io/websocket/wsjson"
 )
 
 func WebSocketHandleFunc(w http.ResponseWriter, req *http.Request) {
@@ -18,5 +21,24 @@ func WebSocketHandleFunc(w http.ResponseWriter, req *http.Request) {
 	}
 
 	// 1. 新用户进来，构建该用户的实例
-	
+	token := req.FormValue("token")
+	nickname := req.FormValue("nickname")
+
+	// 检验昵称长度
+	if l := len(nickname); l < 2 || l > 20 {
+		log.Println("nickname illegal: ", nickname)
+		wsjson.Write(req.Context(), conn, logic.NewErrorMessage("非法昵称，昵称长度：2~20"))
+		conn.Close(websocket.StatusUnsupportedData, "nickname illegal! ")
+		return
+	}
+
+	// 检验昵称是否重复
+	if !logic.Broadcaster.CanEnterRoom(nickname) {
+		log.Println("昵称已存在：", nickname)
+		wsjson.Write(req.Context(), conn, logic.NewErrorMessage("该昵称已存在！"))
+		conn.Close(websocket.StatusUnsupportedData, "nickname exists! ")
+		return
+	}
+
+	userHasToken := logic.NewUser(conn, token, nickname, req.RemoteAddr)
 }
