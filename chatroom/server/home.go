@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"text/template"
-	
+
 	"chatroom/global"
 	"chatroom/logic"
 )
