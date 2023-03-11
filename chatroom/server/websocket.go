@@ -65,4 +65,18 @@ func WebSocketHandleFunc(w http.ResponseWriter, req *http.Request) {
 
 	// 5. 接收用户消息
 	err = user.ReceiveMessage(req.Context())
+
+	// 6. 用户离开
+	logic.Broadcaster.UserLeaving(user)
+	msg = logic.NewUserLeaveMessage(user) // 先把用户踢出去
+	logic.Broadcaster.Broadcast(msg)      // 然后再通知全体成员
+	log.Println("user:", nickname, "离开聊天室")
+
+	// 根据读取时的错误执行不同的 Close
+	if err == nil {
+		conn.Close(websocket.StatusNormalClosure, "正常关闭")
+	} else {
+		log.Println("读取到来自客户端的错误：", err)
+		conn.Close(websocket.StatusInternalError, "读取到来自客户端的错误")
+	}
 }
