@@ -1,12 +1,13 @@
 package server
 
 import (
-	"chatroom/global"
-	"chatroom/logic"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"text/template"
+	
+	"chatroom/global"
+	"chatroom/logic"
 )
 
 func homeHandleFunc(w http.ResponseWriter, req *http.Request) {
