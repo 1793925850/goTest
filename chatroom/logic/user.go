@@ -70,7 +70,7 @@ func NewUser(conn *websocket.Conn, token, nickname, addr string) *User {
 	return user
 }
 
-// 用户发送信息
+// 给用户发送信息
 func (u *User) SendMessage(ctx context.Context) {
 	for msg := range u.MessageChannel {
 		wsjson.Write(ctx, u.conn, msg)

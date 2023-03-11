@@ -41,4 +41,7 @@ func WebSocketHandleFunc(w http.ResponseWriter, req *http.Request) {
 	}
 
 	userHasToken := logic.NewUser(conn, token, nickname, req.RemoteAddr)
+
+	// 2. 开启给用户发送消息的 goroutine
+	go userHasToken.SendMessage(req.Context())
 }
