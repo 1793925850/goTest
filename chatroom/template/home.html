@@ -41,7 +41,7 @@
                 <div class="message"
                      v-for="msg in msglist"
                      v-bind:class="{ system: msg.type>0, myself: msg.user.nickname==curUser.nickname }"
-                >
+                    >
                     <div class="meta" v-if="msg.type==0"><span class="author">${ msg.user.nickname }</span> at ${ formatDate(msg.msg_time) } ${ calc(msg) }</div>
                     <div>
                         <span class="content" style="white-space: pre-wrap;">${ msg.content }</span>
