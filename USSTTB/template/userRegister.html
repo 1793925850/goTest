@@ -1,0 +1,241 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>登录</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <style type="text/css">
+        * {
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -webkit-text-size-adjust: none;
+            -webkit-touch-callout: none;
+            margin: 0px;
+            padding: 0px;
+            outline: none;
+        }
+
+        input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0px 1000px white inset;
+            color: #333;
+        }
+
+        body {
+            font-family: Microsoft YaHei;
+            font-size: 12px;
+            background: #fff;
+        }
+
+        .row {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .checkcodebutton {
+            position: absolute;
+            right: 15px;
+            height: 30px;
+            top: 10px;
+            color: #637dff;
+            border: 1px solid rgba(99, 125, 255, 0.24);
+            border-radius: 6px;
+            padding: 4px 12px;
+        }
+
+        .content {
+            width: 400px;
+            margin: auto;
+            overflow: hidden;
+        }
+
+
+
+        .login-text {
+            width: 100%;
+            font-size: 18px;
+            height: 50px;
+            line-height: 50px;
+            padding: 5px 40px;
+            background: #fff;
+            border: 0;
+            border-bottom: 1px solid #d9e1e3;
+            float: left;
+        }
+
+        .login-text:focus {
+            background: #fff;
+            border-bottom-color: #5caed4;
+        }
+
+        .login-text:first-of-type {
+            border-top: 0;
+        }
+		
+        .user-icon,.vector-icon {
+            background: url(https://img-blog.csdnimg.cn/2a8025cf36c1410487882ac8935e65b5.png) no-repeat -0px 0;
+            width: 25px;
+            height: 32px;
+            display: block;
+            position: absolute;
+            left: 0;
+            top: 8px;
+        }
+		
+		.user-icon {
+			background-position: -27px 0;
+		}
+
+        .login-go {
+            width: 100%;
+            height: 40px;
+            display: block;
+            font-size: 18px;
+            line-height: 40px;
+            color: #fff !important;
+            text-align: center;
+            border: 0;
+            background: #3ab9fc;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .header h1 {
+            width: 400px;
+            margin: auto;
+            font-family: Microsoft YaHei;
+            font-weight: normal;
+            font-size: 24px;
+            line-height: 50px;
+            color: #37baff;
+        }
+
+        .header {
+            text-align: center;
+            width: 85%;
+            margin: 100px auto 0 auto;
+            font-size: 24px;
+            padding: 20px 0;
+            overflow: hidden;
+        }
+
+        .header .logo {
+            background: url(../images/usstloge.png) no-repeat 0px 0px;
+            width: 96px;
+            height: 96px;
+            margin: auto;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            display: block;
+        }
+		
+		.tips {
+			color: #f00;
+			font-size: 14px;
+			text-align: center;
+		}
+		
+		.clear {
+			clear: both;
+		}
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo"></div>
+        <h1>上海理工大学红塔吧</h1>
+    </div>
+    <form name="form" action="/login" method="post" onsubmit="onclick()">
+        <div class="content">
+<!--            用户名密码输入框-->
+            <div class="row">
+                <span class="vector-icon"></span>
+                <input id="username" name="username" type="text" value="" placeholder="用户名" class="login-text" required />
+            </div>
+            <div class="row">
+                <span class="user-icon"></span>
+                <input id="password" name="password" type="text" value="" placeholder="密码" class="login-text" required />
+            </div>
+<!--            昵称头像学院-->
+            <div class="row">
+                <span class="user-icon"></span>
+                <input id="nickname" name="nickname" type="text" value="" placeholder="昵称" class="login-text" required />
+            </div>
+            <div class="row">
+                <span class="user-icon"></span>
+                <input id="college" name="college" type="text" value="" placeholder="学院" class="login-text" required />
+            </div>
+
+<!--            <div class="row">-->
+<!--                <span class="user-icon"></span>-->
+<!--                <input id="user" name="code" type="text" value="" placeholder="验证码" class="login-text" required />-->
+<!--                <input type="button" name="" id="verCodeBtn" class="checkcodebutton" placeholder="手机验证码" value="获取验证码" onclick="settime(this);" />-->
+<!--            </div>-->
+
+<!--            注册登录按钮-->
+            <button onclick="userregister()" id="registerBtn" class="login-go">注册</button>
+            <button onclick="login()" id="loginBtn" class="login-go">返回登录</button>
+        </div>
+<!--        警告提示-->
+		<div id ="tips1" class="tips clear">
+
+        </div>
+    </form>
+</body>
+<script>
+
+    var TOKEN_KEY = "AUTH_TOKEN";
+    var USER_KEY = "USER_INFO";
+    var SALT = "usst"; // 加盐
+
+    //登录
+    function login(val) {
+        window.location.href="/";
+    }
+    //注册
+    function userregister() {
+        window.location.href="/userRegister";
+    }
+
+    $(function () {
+
+        //登录
+        $("#registerBtn").click(function () {
+            var username = $("input[name=username]").val();
+            var password = $("input[name=password]").val();
+            var nickname =$("input[name=nickname]").val();
+            var college =$("input[name=college]").val();
+
+            $.ajax({
+                url: "/api/userRegister",
+                data: JSON.stringify({ username: username, passwd: password ,nickname:nickname ,college:college}),
+                contentType: "application/json",
+                type: "POST",
+                success: function (res) {
+                    if (res.code !== 200) {
+                        return $("#tips1").text(res.error);
+                    }
+
+                    var data = res.data || {};
+                    localStorage.setItem(TOKEN_KEY, data.token);
+                    localStorage.setItem(USER_KEY, JSON.stringify(data.userInfo));
+                    location.href = "/index";
+                },
+                error: function (err) {
+                    console.log("err", err);
+                    $("#tips1").text("登录错误，请重试");
+                },
+            });
+        });
+
+    })
+
+
+</script>
+
+</html>
+
