@@ -18,4 +18,6 @@ func Router() {
 	http.HandleFunc("/index", views.HTML.Index)
 	http.HandleFunc("/userRegister", views.HTML.UserRegister)
 	http.HandleFunc("/erShou", views.HTML.ErShou)
+	http.HandleFunc("/qiuZhu", views.HTML.QiuZhu)
+
 }
