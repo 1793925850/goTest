@@ -13,7 +13,7 @@ type Post struct {
 	Slug       string    `json:"slug"`       // 自定也页面 path
 	Content    string    `json:"content"`    // 文章的html
 	Markdown   string    `json:"markdown"`   // 文章的Markdown
-	CategoryId int       `json:"categoryId"` //分类id
+	CategoryId int       `json:"categoryId"` //分类id 1：二手；2：求助；3：闲聊
 	UserId     int       `json:"userId"`     //用户id
 	ViewCount  int       `json:"viewCount"`  //查看次数
 	Type       int       `json:"type"`       //文章类型 0 普通，1 自定义文章
