@@ -30,7 +30,7 @@ func (*HTMLApi) QiuZhu(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path
 	slug := strings.TrimPrefix(path, "/qiuZhu")
 
-	hr, err := service.GetAllIndexInfo(slug, page, pagesize)
+	hr, err := service.GetAllQiuZhuInfo(slug, page, pagesize)
 	if err != nil {
 		log.Println("qiuZhu", err)
 		qiuZhu.WriteError(w, err)

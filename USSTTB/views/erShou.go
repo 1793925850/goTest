@@ -30,7 +30,7 @@ func (*HTMLApi) ErShou(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path
 	slug := strings.TrimPrefix(path, "/erShou")
 
-	hr, err := service.GetAllIndexInfo(slug, page, pagesize)
+	hr, err := service.GetAllErShouInfo(slug, page, pagesize)
 	if err != nil {
 		log.Println("erShou", err)
 		erShou.WriteError(w, err)
