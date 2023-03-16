@@ -10,14 +10,12 @@ import (
 func GetAllErShouInfo(slug string, page, pagesize int) (*models.HomeData, error) {
 
 	categorys, err := dao.GetAllCategory()
-	if err != nil {
-		return nil, err
-	}
+
 	var posts []models.Post
 	var total int
 	if slug == "" {
-		posts, err = dao.GetPostPage(page, pagesize)
-		total = dao.CountGetAllPost()
+		posts, err = dao.GetPostPageBycategoryId(1, page, pagesize)
+		total = dao.CountGetAllPostBycategoryId(1)
 	} else {
 		posts, err = dao.GetPostPageBySlug(slug, page, pagesize)
 		total = dao.CountGetAllPostByslug(slug)
