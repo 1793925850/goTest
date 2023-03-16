@@ -10,7 +10,7 @@ import (
 )
 
 func (*HTMLApi) QiuZhu(w http.ResponseWriter, r *http.Request) {
-	qiuZhu := common.Template.Qiuzhu
+	qiuZhu := common.Template.QiuZhu
 	//页面涉及到的数据需要有定义,赋值
 	//查数据库
 
