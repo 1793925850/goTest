@@ -15,6 +15,7 @@ type HtmlTemplate struct {
 	Index        TemplateTB
 	Login        TemplateTB
 	UserRegister TemplateTB
+	ErShou       TemplateTB
 }
 
 func (t *TemplateTB) WriteError(w io.Writer, err error) {
