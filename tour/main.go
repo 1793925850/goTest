@@ -1,6 +1,10 @@
 package main
 
-import "log"
+import (
+	"log"
+
+	"tour/cmd"
+)
 
 func main() {
 	err := cmd.Execute()
