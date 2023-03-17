@@ -3,7 +3,7 @@ package cmd
 import (
 	"log"
 	"strings"
-	
+
 	"tour/internal/word"
 
 	"github.com/spf13/cobra"
