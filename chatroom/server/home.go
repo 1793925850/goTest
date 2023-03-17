@@ -1,7 +1,7 @@
 package server
 
 import (
-	"encoding/json"
+	"encoding/json" // json 包实现了 json 对象的编、解码
 	"fmt"
 	"net/http"
 	"text/template"
@@ -29,7 +29,7 @@ func userListHandleFunc(w http.ResponseWriter, req *http.Request) {
 	w.WriteHeader(http.StatusOK)
 
 	userList := logic.Broadcaster.GetUserList()
-	b, err := json.Marshal(userList)
+	b, err := json.Marshal(userList) // Marshal 函数返回 json 编码
 
 	if err != nil {
 		fmt.Fprint(w, `[]`)
