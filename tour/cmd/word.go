@@ -6,7 +6,7 @@ import (
 
 	"tour/internal/word"
 
-	"github.com/spf13/cobra"
+	"github.com/spf13/cobra" // cobra 包是一个用于生成命令行工具的框架
 )
 
 const (
@@ -20,6 +20,7 @@ const (
 var (
 	str  string
 	mode int8
+	// Join 将一系列字符串连接为一个字符串，之间用 sep 来分隔
 	desc = strings.Join([]string{
 		"该子命令支持各种单词格式转换，模式如下：",
 		"1：全部转大写",
@@ -30,7 +31,7 @@ var (
 	}, "\n")
 
 	// wordCmd 子命令的具体内容
-	wordCmd = &cobra.Command{
+	wordCmd = &cobra.Command{ // Command 表示一个命令
 		Use:   "word",   // 子命令的“关键词”
 		Short: "单词格式转换", // 工具集中每个可用命令的简短描述
 		Long:  desc,     // 工具集中某个子命令的详细描述
@@ -62,6 +63,7 @@ var (
 // word 子命令的行参数的设置和初始化
 func init() {
 	// 给子命令加入条件标签
+	// Flags 是命令行选项
 	wordCmd.Flags().StringVarP(&str, "str", "s", "", "请输入单词内容")   // 表示该标签接收的输入为 string
 	wordCmd.Flags().Int8VarP(&mode, "mode", "m", 0, "请输入单词转换的模式") // 表示该标签接收的输入为 int
 }
