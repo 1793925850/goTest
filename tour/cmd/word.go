@@ -28,11 +28,13 @@ var (
 		"4：下划线转小写驼峰",
 		"5：驼峰转下划线",
 	}, "\n")
+
+	// wordCmd 子命令的具体内容
 	wordCmd = &cobra.Command{
-		Use:   "word",
-		Short: "单词格式转换",
-		Long:  desc,
-		Run: func(cmd *cobra.Command, args []string) {
+		Use:   "word",         // 子命令的“关键词”
+		Short: "单词格式转换", // 工具集中每个可用命令的简短描述
+		Long:  desc,           // 工具集中某个子命令的详细描述
+		Run: func(cmd *cobra.Command, args []string) { // 子命令的执行函数
 			var content string
 
 			switch mode {
@@ -55,8 +57,9 @@ var (
 	}
 )
 
-// word 子命令
+// word 子命令的初始化
 func init() {
-	wordCmd.Flags().StringVarP(&str, "str", "s", "", "请输入单词内容")
-	wordCmd.Flags().Int8VarP(&mode, "mode", "m", 0, "请输入单词转换的模式")
+	// 给子命令加入条件标签
+	wordCmd.Flags().StringVarP(&str, "str", "s", "", "请输入单词内容")      // 表示该标签接收的输入为 string
+	wordCmd.Flags().Int8VarP(&mode, "mode", "m", 0, "请输入单词转换的模式") // 表示该标签接收的输入为 int
 }
