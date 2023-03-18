@@ -31,7 +31,7 @@ var (
 	wordCmd = &cobra.Command{
 		Use:   "word",
 		Short: "单词格式转换",
-		Long:  "desc",
+		Long:  desc,
 		Run: func(cmd *cobra.Command, args []string) {
 			var content string
 
