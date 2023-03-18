@@ -13,7 +13,7 @@
     - root.go：用于放置根命令
   - internal
     - word
-      - word.go：具体编写单词各种转换方法
+      - word.go：word 子命令中每个功能的具体实现
   - pkg
   - README.md
 
