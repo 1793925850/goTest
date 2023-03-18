@@ -31,9 +31,9 @@ var (
 
 	// wordCmd 子命令的具体内容
 	wordCmd = &cobra.Command{
-		Use:   "word",         // 子命令的“关键词”
+		Use:   "word",   // 子命令的“关键词”
 		Short: "单词格式转换", // 工具集中每个可用命令的简短描述
-		Long:  desc,           // 工具集中某个子命令的详细描述
+		Long:  desc,     // 工具集中某个子命令的详细描述
 		Run: func(cmd *cobra.Command, args []string) { // 子命令的执行函数
 			var content string
 
@@ -57,9 +57,9 @@ var (
 	}
 )
 
-// word 子命令的初始化
+// word 子命令的行参数的设置和初始化
 func init() {
 	// 给子命令加入条件标签
-	wordCmd.Flags().StringVarP(&str, "str", "s", "", "请输入单词内容")      // 表示该标签接收的输入为 string
+	wordCmd.Flags().StringVarP(&str, "str", "s", "", "请输入单词内容")   // 表示该标签接收的输入为 string
 	wordCmd.Flags().Int8VarP(&mode, "mode", "m", 0, "请输入单词转换的模式") // 表示该标签接收的输入为 int
 }
