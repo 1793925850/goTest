@@ -51,10 +51,11 @@ var calculateTimeCmd = &cobra.Command{
 				layout = "2006-01-01 15:04"
 			}
 
+			// Parse 解析一个格式化的时间字符串并返回它代表的时间
 			currentTimer, err = time.Parse(layout, calculateTime)
 			if err != nil { // 如果 calculateTime 里的时间解析失败，使用下列方法
 				t, _ := strconv.Atoi(calculateTime)
-				currentTimer = time.Unix(int64(t), 0)
+				currentTimer = time.Unix(int64(t), 0) // Unix 直接将时间戳转化为当前时间格式
 			}
 		}
 
