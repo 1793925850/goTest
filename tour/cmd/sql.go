@@ -1,9 +1,11 @@
 package cmd
 
 import (
-	"github.com/spf13/cobra"
 	"log"
+
 	"tour/internal/sql2struct"
+
+	"github.com/spf13/cobra"
 )
 
 var (
