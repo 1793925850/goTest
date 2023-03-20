@@ -62,12 +62,14 @@ var DBTypeToStructType = map[string]string{
 	"double":     "float64",
 }
 
+// NewDBModel 新建一个连接数据库的模型
 func NewDBModel(info *DBInfo) *DBModel {
 	return &DBModel{
 		DBInfo: info,
 	}
 }
 
+// Connect 连接数据库
 func (m *DBModel) Connect() error {
 	var err error
 	s := "%s:%s@tcp(%s)/information_schema?" +
@@ -88,6 +90,7 @@ func (m *DBModel) Connect() error {
 	return nil
 }
 
+// GetColumns 获取表中列的信息
 func (m *DBModel) GetColumns(dbName, tableName string) ([]*TableColumn, error) {
 	query := "SELECT COLUMN_NAME, DATA_TYPE, COLUMN_KEY, " +
 		"IS_NULLABLE, COLUMN_TYPE, COLUMN_COMMENT " +
