@@ -18,4 +18,5 @@ func init() {
 	// rootCmd 相当于根命令，内容是空的，子命令都存在它下面
 	rootCmd.AddCommand(wordCmd)
 	rootCmd.AddCommand(timeCmd)
+	rootCmd.AddCommand(sqlCmd)
 }
