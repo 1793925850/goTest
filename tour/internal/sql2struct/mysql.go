@@ -1,26 +1,26 @@
 package sql2struct
 
 import (
-	"database/sql"
+	"database/sql" // sql 包提供了保证SQL或类SQL数据库的泛用接口
 	"errors"
 	"fmt"
 
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql" // 连接数据库的驱动
 )
 
-// DBModel 是整个数据库连接的核心对象
+// DBModel 是整个数据库连接的核心对象，也可以认为是数据库
 type DBModel struct {
-	DBEngine *sql.DB
-	DBInfo   *DBInfo
+	DBEngine *sql.DB // 连接数据库的引擎
+	DBInfo   *DBInfo //
 }
 
-// DBInfo 用于存储连接 MySQL 的一些基本信息
+// DBInfo 用于存储用于连接 MySQL 的一些基本信息
 type DBInfo struct {
-	DBType   string
-	Host     string
-	UserName string
-	PassWord string
-	Charset  string
+	DBType   string // 要连接的数据库类型
+	Host     string // 数据库所在主机 socket
+	UserName string // 数据库用户名
+	PassWord string // 数据库密码
+	Charset  string // 数据库的编码格式(例如，utf-8)
 }
 
 // TableColumn 用于存储 COLUMNS 表中需要的一些字段
