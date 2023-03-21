@@ -61,7 +61,7 @@ func init() {
 
 	sql2structCmd.Flags().StringVarP(&username, "username", "", "", "请输入数据库的账号")
 	sql2structCmd.Flags().StringVarP(&password, "password", "", "", "请输入数据库的密码")
-	sql2structCmd.Flags().StringVarP(&host, "host", "", "127.0.0.1:8888", "请输入数据库的HOST")
+	sql2structCmd.Flags().StringVarP(&host, "host", "", "127.0.0.1:3306", "请输入数据库的HOST")
 	sql2structCmd.Flags().StringVarP(&charset, "charset", "", "utf8mb4", "请输入数据库的编码")
 	sql2structCmd.Flags().StringVarP(&dbType, "type", "", "mysql", "请输入数据库实例类型(默认 mysql)")
 	sql2structCmd.Flags().StringVarP(&dbName, "db", "", "", "请输入数据库名称")
