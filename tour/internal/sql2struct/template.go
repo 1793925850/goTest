@@ -22,10 +22,10 @@ type StructTemplate struct {
 }
 
 type StructColumn struct {
-	Name    string
-	Type    string
-	Tag     string
-	Comment string
+	Name    string // 结构体某个属性的属性名
+	Type    string // 该属性的类型
+	Tag     string // 该属性的 json 表示
+	Comment string // 该属性的注释
 }
 
 type StructTemplateDB struct {
