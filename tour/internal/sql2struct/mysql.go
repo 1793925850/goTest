@@ -92,6 +92,7 @@ func (m *DBModel) Connect() error {
 
 // GetColumns 获取表中列的信息
 func (m *DBModel) GetColumns(dbName, tableName string) ([]*TableColumn, error) {
+	// query 数据库查询请求
 	query := "SELECT COLUMN_NAME, DATA_TYPE, COLUMN_KEY, " +
 		"IS_NULLABLE, COLUMN_TYPE, COLUMN_COMMENT " +
 		"FROM COLUMNS WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? "
@@ -103,7 +104,7 @@ func (m *DBModel) GetColumns(dbName, tableName string) ([]*TableColumn, error) {
 		return nil, errors.New("没有数据")
 	}
 
-	defer rows.Close()
+	defer rows.Close() // 最后要关闭当前这条请求
 
 	var columns []*TableColumn
 
