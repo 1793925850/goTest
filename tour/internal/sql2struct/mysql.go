@@ -95,7 +95,7 @@ func (m *DBModel) GetColumns(dbName, tableName string) ([]*TableColumn, error) {
 	query := "SELECT COLUMN_NAME, DATA_TYPE, COLUMN_KEY, " +
 		"IS_NULLABLE, COLUMN_TYPE, COLUMN_COMMENT " +
 		"FROM COLUMNS WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? "
-	rows, err := m.DBEngine.Query(query, dbName, tableName)
+	rows, err := m.DBEngine.Query(query, dbName, tableName) // 返回的是行的集合
 	if err != nil {
 		return nil, err
 	}
