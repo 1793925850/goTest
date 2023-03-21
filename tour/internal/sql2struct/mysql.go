@@ -27,9 +27,9 @@ type DBInfo struct {
 type TableColumn struct {
 	ColumnName    string // 列名
 	DataType      string // 列所对应的数据类型
-	IsNullable    string //
-	ColumnKey     string //
-	ColumnType    string //
+	IsNullable    string // 判断某个列是否为空
+	ColumnKey     string // 如果某个列是逐渐，则添加 pri
+	ColumnType    string // 列类型
 	ColumnComment string // 列注释
 }
 
