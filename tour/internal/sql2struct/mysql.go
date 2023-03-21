@@ -25,12 +25,12 @@ type DBInfo struct {
 
 // TableColumn 用于存储 COLUMNS 表中需要的一些字段
 type TableColumn struct {
-	ColumnName    string
-	DataType      string
-	IsNullable    string
-	ColumnKey     string
-	ColumnType    string
-	ColumnComment string
+	ColumnName    string // 列名
+	DataType      string // 列所对应的数据类型
+	IsNullable    string // 该列的值是否可以为空
+	ColumnKey     string //
+	ColumnType    string //
+	ColumnComment string // 列注释
 }
 
 // DBTypeToStructType 数据库类型到 GO 结构体类型的映射
