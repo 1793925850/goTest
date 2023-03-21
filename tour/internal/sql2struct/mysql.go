@@ -27,7 +27,7 @@ type DBInfo struct {
 type TableColumn struct {
 	ColumnName    string // 列名
 	DataType      string // 列所对应的数据类型
-	IsNullable    string // 该列的值是否可以为空
+	IsNullable    string //
 	ColumnKey     string //
 	ColumnType    string //
 	ColumnComment string // 列注释
