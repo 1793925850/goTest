@@ -2,8 +2,8 @@ package sql2struct
 
 import (
 	"fmt"
-	"html/template"
 	"os"
+	"text/template"
 
 	"tour/internal/word"
 )
