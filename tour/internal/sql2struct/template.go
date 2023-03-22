@@ -64,6 +64,7 @@ func (t *StructTemplate) Generate(tableName string, tplColumns []*StructColumn) 
 	// New 创建一个名为 name 的模板
 	// Funcs 向模板t的函数字典里加入参数funcMap内的键值对
 	// FuncMap 类型定义了函数名字符串到函数的映射
+	// Parse 将字符串 t.structTpl 解析为模板
 	tpl := template.Must(template.New("sql2struct").Funcs(template.FuncMap{
 		"ToCamelCase": word.UnderscoreToUpperCamelCase,
 	}).Parse(t.structTpl))
