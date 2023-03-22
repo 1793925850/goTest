@@ -74,6 +74,7 @@ func (t *StructTemplate) Generate(tableName string, tplColumns []*StructColumn) 
 		Columns:   tplColumns,
 	}
 
+	// tplDB 按照 tpl 将数据写入 os.Stdout
 	err := tpl.Execute(os.Stdout, tplDB) // 这里是结构体生成的位置，目前是控制台(os.Stdout)
 	if err != nil {
 		return err
