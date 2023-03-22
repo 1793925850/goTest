@@ -58,6 +58,7 @@ func (t *StructTemplate) AssemblyColumns(tbColumns []*TableColumn) []*StructColu
 	return tplColumns
 }
 
+// Generate 根据结构体数组 tplColumns 和表名 tableName ，最终生成结构体
 func (t *StructTemplate) Generate(tableName string, tplColumns []*StructColumn) error {
 	tpl := template.Must(template.New("sql2struct").Funcs(template.FuncMap{
 		"ToCamelCase": word.UnderscoreToUpperCamelCase,
