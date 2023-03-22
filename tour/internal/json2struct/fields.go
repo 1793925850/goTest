@@ -48,4 +48,5 @@ func (f *Fields) removeDuplicate() Fields {
 			fields = append(fields, entry)
 		}
 	}
+	return fields
 }
