@@ -30,6 +30,7 @@ var sql2structCmd = &cobra.Command{
 	Short: "sql 转换成 struct",
 	Long:  "sql 转换成 struct",
 	Run: func(cmd *cobra.Command, args []string) {
+		// 初始化数据库信息
 		dbInfo := &sql2struct.DBInfo{
 			DBType:   dbType,
 			Host:     host,
@@ -37,18 +38,24 @@ var sql2structCmd = &cobra.Command{
 			PassWord: password,
 			Charset:  charset,
 		}
+		// 创建数据库连接模型
 		dbModel := sql2struct.NewDBModel(dbInfo)
+		// 数据库连接
 		err := dbModel.Connect()
 		if err != nil {
 			log.Fatalf("dbModel.Connect err: %v", err)
 		}
+		// 获得目标数据库的属性
 		columns, err := dbModel.GetColumns(dbName, tableName)
 		if err != nil {
 			log.Fatalf("dbModel.GetColumns err: %v", err)
 		}
 
+		// 初始化数据库转结构体模板
 		template := sql2struct.NewStructTemplate()
+		// 输出结构体的属性
 		templateColumns := template.AssemblyColumns(columns)
+		// 生成结构体
 		err = template.Generate(tableName, templateColumns)
 		if err != nil {
 			log.Fatalf("template.Generate err: %v", err)
