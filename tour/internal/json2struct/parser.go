@@ -45,6 +45,8 @@ func (o *Output) appendSuffix() {
 func NewParser(s string) (*Parser, error) {
 	source := make(map[string]interface{})
 
+	// Unmarshal 将 json编码型的数据进行解析并存到第二个参数里，第二个参数必须是指针
+	// string 的底层是 []byte，因此可以互相转换
 	if err := json.Unmarshal([]byte(s), &source); err != nil {
 		return nil, err
 	}
