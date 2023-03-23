@@ -9,6 +9,7 @@ import (
 
 func main() {
 	router := routers.NewRouter()
+	// 创建并初始化 http 服务器
 	s := &http.Server{
 		Addr:           ":8080",
 		Handler:        router,
