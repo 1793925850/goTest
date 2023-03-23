@@ -1,15 +1,17 @@
 package routers
+
 // 路由
 
 import "github.com/gin-gonic/gin"
 
-func NewRouter() *gin.Engine{
+func NewRouter() *gin.Engine {
 	r := gin.New()
 
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
-	apiv1 := r.Group("/api/v1"){
+	apiv1 := r.Group("/api/v1")
+	{
 		// HTTP 标签管理路径
 		apiv1.POST("/tags")
 		apiv1.DELETE("/tags/:id")
