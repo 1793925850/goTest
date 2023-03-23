@@ -9,21 +9,21 @@ func NewRouter() *gin.Engine{
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
-	apivl := r.Group("/api/vl"){
+	apiv1 := r.Group("/api/v1"){
 		// HTTP 标签管理路径
-		apivl.POST("/tags")
-		apivl.DELETE("/tags/:id")
-		apivl.PUT("/tags/:id")
-		apivl.PATCH("/tags/:id/state")
-		apivl.GET("/tags")
+		apiv1.POST("/tags")
+		apiv1.DELETE("/tags/:id")
+		apiv1.PUT("/tags/:id")
+		apiv1.PATCH("/tags/:id/state")
+		apiv1.GET("/tags")
 
 		// HTTP 文章管理路径
-		apivl.POST("/articles")
-		apivl.DELETE("/articles/:id")
-		apivl.PUT("/articles/:id")
-		apivl.PATCH("/articles/:id/state")
-		apivl.GET("/articles/:id")
-		apivl.GET("/articles")
+		apiv1.POST("/articles")
+		apiv1.DELETE("/articles/:id")
+		apiv1.PUT("/articles/:id")
+		apiv1.PATCH("/articles/:id/state")
+		apiv1.GET("/articles/:id")
+		apiv1.GET("/articles")
 	}
 
 	return r
