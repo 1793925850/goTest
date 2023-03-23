@@ -1,9 +1,11 @@
 package cmd
 
 import (
-	"github.com/spf13/cobra"
 	"log"
+
 	"tour/internal/json2struct"
+
+	"github.com/spf13/cobra"
 )
 
 var jsonCmd = &cobra.Command{
