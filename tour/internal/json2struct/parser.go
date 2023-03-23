@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	TYPEMAP_STRING_INTERFACE = "map[string]interface {}"
-	TYPE_INTERFACE           = "[]interface {}"
+	TYPE_MAP_STRING_INTERFACE = "map[string]interface {}"
+	TYPE_INTERFACE            = "[]interface {}"
 )
 
 type Parser struct {
@@ -78,9 +78,72 @@ func (p *Parser) Json2Struct() string {
 	}
 	p.Output.appendSuffix()
 
+	// Join 将第一个参数里的每个元素之间都加入 sep ，并全部连接起来形成一个 string
 	return strings.Join(append(p.Output, p.Children...), "\n")
 }
 
-func (p *Parser) toParentList(parentName string, parentValues []interface{}, isTop bool) {
+func (p *Parser) toChildrenStruct(parentName string, values map[string]interface{}) {
+	p.Children.appendSegment(p.StructTag, parentName)
+	for fieldName, fieldValue := range values {
+		p.Children.appendSegment("%s %s", fieldName, reflect.TypeOf(fieldValue).String())
+	}
+	p.Children.appendSuffix()
+}
 
+func (p *Parser) toParentList(parentName string, parentValues []interface{}, isTop bool) {
+	var fields Fields
+
+	for _, v := range parentValues {
+		valueType := reflect.TypeOf(v).String()
+
+		if valueType == TYPE_MAP_STRING_INTERFACE {
+			fields = append(fields, p.handleParentTypeMapIface(v.(map[string]interface{}))...)
+			p.Children.appendSegment(p.StructTag, parentName)
+
+			for _, field := range fields.removeDuplicate() {
+				p.Children.appendSegment("%s %s", field.Name, field.Type)
+			}
+			p.Children.appendSuffix()
+
+			if isTop {
+				valueType = word.UnderscoreToUpperCamelCase(parentName)
+			}
+		}
+
+		if isTop {
+			p.Output.appendSegment("%s %s%s", parentName, "[]", valueType)
+		}
+		break
+	}
+}
+
+func (p *Parser) handleParentTypeMapIface(values map[string]interface{}) Fields {
+
+}
+
+func (p *Parser) handleTypeIface(fieldName string, fieldValues []interface{}) FieldSegment {
+	fieldSegment := FieldSegment{
+		Format: "%s%s",
+		FieldValues: []FieldValue{
+			{CamelCase: false, Value: "[]"},
+			{CamelCase: true, Value: fieldName},
+		},
+	}
+
+	p.toParentList(fieldName, fieldValues, false)
+
+	return fieldSegment
+}
+
+func (p *Parser) handleTypeMapIface(fieldName string, fieldValues map[string]interface{}) FieldSegment {
+	fieldSegment := FieldSegment{
+		Format: "%s",
+		FieldValues: []FieldValue{
+			{CamelCase: true, Value: fieldName},
+		},
+	}
+
+	p.toChildrenStruct(fieldName, fieldValues)
+
+	return fieldSegment
 }
