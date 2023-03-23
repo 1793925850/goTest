@@ -118,7 +118,30 @@ func (p *Parser) toParentList(parentName string, parentValues []interface{}, isT
 }
 
 func (p *Parser) handleParentTypeMapIface(values map[string]interface{}) Fields {
+	var fields Fields
 
+	for fieldName, fieldValues := range values {
+		var (
+			fieldValueType = reflect.TypeOf(fieldValues).String()
+			fieldSegment   = FieldSegment{
+				Format: "%s",
+				FieldValues: []FieldValue{
+					{CamelCase: true, Value: fieldValueType},
+				},
+			}
+		)
+
+		switch fieldValueType {
+		case TYPE_INTERFACE:
+			fieldSegment = p.handleTypeIface(fieldName, fieldValues.([]interface{}))
+		case TYPE_MAP_STRING_INTERFACE:
+			fieldSegment = p.handleTypeMapIface(fieldName, fieldValues.(map[string]interface{}))
+		}
+
+		fields.appendSegment(fieldName, fieldSegment)
+	}
+
+	return fields
 }
 
 func (p *Parser) handleTypeIface(fieldName string, fieldValues []interface{}) FieldSegment {
