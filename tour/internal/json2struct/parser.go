@@ -3,6 +3,8 @@ package json2struct
 import (
 	"encoding/json"
 	"fmt"
+	"reflect"
+	"strings"
 
 	"tour/internal/word"
 )
@@ -56,4 +58,29 @@ func NewParser(s string) (*Parser, error) {
 
 func (p *Parser) Json2Struct() string {
 	p.Output.appendSegment(p.StructTag, p.StructName)
+
+	for parentName, parentValues := range p.Source {
+		valueType := reflect.TypeOf(parentValues).String()
+
+		if valueType == TYPE_INTERFACE {
+			p.toParentList(parentName, parentValues.([]interface{}), true)
+		} else {
+			var fields Fields
+
+			fields.appendSegment(parentName, FieldSegment{
+				Format: "%s",
+				FieldValues: []FieldValue{
+					{CamelCase: false, Value: valueType},
+				},
+			})
+			p.Output.appendSegment("%s %s", fields[0].Name, fields[0].Type)
+		}
+	}
+	p.Output.appendSuffix()
+
+	return strings.Join(append(p.Output, p.Children...), "\n")
+}
+
+func (p *Parser) toParentList(parentName string, parentValues []interface{}, isTop bool) {
+
 }
