@@ -7,6 +7,6 @@ type Tag struct {
 }
 
 // 这里我在 Tag 前加了个 *
-func (t *Tag) TableName() string {
+func (t Tag) TableName() string {
 	return "blog_tag"
 }

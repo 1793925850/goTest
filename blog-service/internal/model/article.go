@@ -9,6 +9,6 @@ type Article struct {
 	State         uint8  `json:"state"`
 }
 
-func (a *Article) TableName() string {
+func (a Article) TableName() string {
 	return "blog_article"
 }
