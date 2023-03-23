@@ -8,8 +8,8 @@ func NewArticle() Article {
 	return Article{}
 }
 
-func (t Article) Get() (c *gin.Context)    {}
-func (t Article) List() (c *gin.Context)   {}
-func (t Article) Create() (c *gin.Context) {}
-func (t Article) Update() (c *gin.Context) {}
-func (t Article) Delete() (c *gin.Context) {}
+func (t Article) Get(c *gin.Context)    {}
+func (t Article) List(c *gin.Context)   {}
+func (t Article) Create(c *gin.Context) {}
+func (t Article) Update(c *gin.Context) {}
+func (t Article) Delete(c *gin.Context) {}
