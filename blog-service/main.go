@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 	"time"
@@ -11,19 +12,21 @@ import (
 )
 
 func main() {
+	gin.SetMode(global.ServerSetting.RunMode)
 	router := routers.NewRouter()
 	// 创建并初始化 http 服务器
 	s := &http.Server{
-		Addr:           ":8080",
+		Addr:           ":" + global.ServerSetting.HttpPort,
 		Handler:        router,
-		ReadTimeout:    10 * time.Second,
-		WriteTimeout:   10 * time.Second,
+		ReadTimeout:    global.ServerSetting.ReadTimeout,
+		WriteTimeout:   global.ServerSetting.WriterTimeout,
 		MaxHeaderBytes: 1 << 20,
 	}
 
 	s.ListenAndServe()
 }
 
+// init 控制应用程序的初始化流程
 func init() {
 	err := setupSetting()
 	if err != nil {
