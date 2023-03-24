@@ -1,10 +1,12 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"time"
 
 	"blog-service/internal/routers"
+	"blog-service/pkg/setting"
 )
 
 func main() {
@@ -19,4 +21,16 @@ func main() {
 	}
 
 	s.ListenAndServe()
+}
+
+func init() {
+	err := setupSetting()
+	if err != nil {
+		log.Fatalf("init.setupSetting err: %v", err)
+	}
+}
+
+// setupSetting 初始化全局 Setting 变量
+func setupSetting() error {
+	s, err := setting.NewSetting()
 }

@@ -4,6 +4,7 @@ package global
 
 import "blog-service/pkg/setting"
 
+// 配置的全局变量
 var (
 	ServerSetting   *setting.ServerSettingS
 	AppSetting      *setting.AppSettingS
