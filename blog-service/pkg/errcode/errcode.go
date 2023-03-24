@@ -84,6 +84,7 @@ func (e *Error) StatusCode() int {
 	case InvalidParams.Code():
 		return http.StatusBadRequest
 	case UnauthorizedAuthNotExist.Code():
+		// fallthrough 会不管下一层的 case 条件直接进行执行
 		fallthrough
 	case UnauthorizedTokenError.Code():
 		fallthrough
