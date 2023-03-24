@@ -32,6 +32,8 @@ type DatabaseSettingS struct {
 	MaxOpenConns int
 }
 
+var sections = make(map[string]interface{})
+
 // ReadSection 读取区段配置
 func (s *Setting) ReadSection(k string, v interface{}) error {
 	// UnmarshalKey 获取单个键并将其解组为 Struct
@@ -40,10 +42,20 @@ func (s *Setting) ReadSection(k string, v interface{}) error {
 		return err
 	}
 
+	if _, ok := sections[k]; !ok {
+		sections[k] = v
+	}
+
 	return nil
 }
 
 func (s *Setting) ReloadAllSection() error {
+	for k, v := range sections {
+		err := s.ReadSection(k, v)
+		if err != nil {
+			return err
+		}
+	}
 
 	return nil
 }
