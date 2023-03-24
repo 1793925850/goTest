@@ -9,6 +9,7 @@ import (
 
 type Setting struct {
 	// Viper 是一个优先配置注册表。它维护一组配置源，获取值来填充这些配置源，并根据源的优先级提供这些配置源
+	// 简单地说，Viper 就是个帮忙找东西的
 	vp *viper.Viper
 }
 
