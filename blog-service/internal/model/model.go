@@ -20,7 +20,7 @@ type Model struct {
 	IsDel      uint8  `json:"is_del"`
 }
 
-// NewDBEngine 连接数据库，新建并初始化数据库引擎
+// NewDBEngine 连接数据库，初始化数据库引擎
 func NewDBEngine(databaseSetting *setting.DatabaseSettingS) (*gorm.DB, error) {
 	s := "%s:%s@tcp(%s)/%s?charset=%s&parseTime=%t&loc=Local"
 	// 进入到指定的 mysql 的数据库中
