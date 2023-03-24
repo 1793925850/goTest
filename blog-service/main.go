@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	"blog-service/global"
 	"blog-service/internal/routers"
 	"blog-service/pkg/setting"
 )
@@ -33,4 +34,27 @@ func init() {
 // setupSetting 初始化全局 Setting 变量
 func setupSetting() error {
 	s, err := setting.NewSetting()
+	if err != nil {
+		return err
+	}
+
+	err = s.ReadSection("Server", &global.ServerSetting)
+	if err != nil {
+		return err
+	}
+
+	err = s.ReadSection("App", &global.AppSetting)
+	if err != nil {
+		return err
+	}
+
+	err = s.ReadSection("Database", &global.DatabaseSetting)
+	if err != nil {
+		return err
+	}
+
+	global.ServerSetting.ReadTimeout *= time.Second
+	global.ServerSetting.WriterTimeout *= time.Second
+
+	return nil
 }
