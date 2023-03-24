@@ -17,7 +17,7 @@ type Setting struct {
 func NewSetting(configs ...string) (*Setting, error) {
 	vp := viper.New()
 
-	// SetConfigName 设置配置文件的名称。不包括扩展。
+	// SetConfigName 设置要查找的配置文件的名称。不包括扩展。
 	vp.SetConfigName("config")
 	// config 是配置文件所在的文件夹
 	for _, config := range configs {
@@ -26,7 +26,7 @@ func NewSetting(configs ...string) (*Setting, error) {
 			vp.AddConfigPath(config)
 		}
 	}
-	// SetConfigType 设置配置文件的文件类型
+	// SetConfigType 设置要查找的配置文件的文件类型
 	vp.SetConfigType("yaml")
 
 	// ReadInConfig 加载配置文件
