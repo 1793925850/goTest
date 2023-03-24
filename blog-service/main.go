@@ -13,11 +13,12 @@ import (
 
 func main() {
 	gin.SetMode(global.ServerSetting.RunMode)
+
 	router := routers.NewRouter()
 	// 创建并初始化 http 服务器
 	s := &http.Server{
 		Addr:           ":" + global.ServerSetting.HttpPort,
-		Handler:        router,
+		Handler:        router, // 因为 router 里实现了 Handler 接口，所以可以放在这里
 		ReadTimeout:    global.ServerSetting.ReadTimeout,
 		WriteTimeout:   global.ServerSetting.WriterTimeout,
 		MaxHeaderBytes: 1 << 20,
