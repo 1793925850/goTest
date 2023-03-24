@@ -41,6 +41,11 @@ func init() {
 	if err != nil {
 		log.Fatalf("init.setupSetting err: %v", err)
 	}
+
+	err = setupDBEngine()
+	if err != nil {
+		log.Fatalf("init.setupSetting err: %v", err)
+	}
 }
 
 // setupSetting 初始化全局变量：Setting
