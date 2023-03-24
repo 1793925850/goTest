@@ -1,15 +1,16 @@
 package main
 
 import (
-	"blog-service/internal/model"
-	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 	"time"
 
 	"blog-service/global"
+	"blog-service/internal/model"
 	"blog-service/internal/routers"
 	"blog-service/pkg/setting"
+
+	"github.com/gin-gonic/gin"
 )
 
 var (
