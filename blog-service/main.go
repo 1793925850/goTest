@@ -11,6 +11,13 @@ import (
 	"blog-service/pkg/setting"
 )
 
+var (
+	port      string
+	config    string
+	runMode   string
+	isVersion bool
+)
+
 func main() {
 	gin.SetMode(global.ServerSetting.RunMode)
 
@@ -37,7 +44,7 @@ func init() {
 
 // setupSetting 初始化全局 Setting 变量
 func setupSetting() error {
-	s, err := setting.NewSetting()
+	s, err := setting.NewSetting("configs")
 	if err != nil {
 		return err
 	}
