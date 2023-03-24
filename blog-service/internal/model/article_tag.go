@@ -1,5 +1,6 @@
 package model
 
+// 文章标签 model
 type ArticleTag struct {
 	*Model
 	TagID     uint32 `json:"tag_id"`

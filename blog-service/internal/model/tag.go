@@ -1,5 +1,6 @@
 package model
 
+// 标签 model
 type Tag struct {
 	*Model        // 复用公共 Model
 	Name   string `json:"name"`

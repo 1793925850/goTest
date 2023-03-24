@@ -1,5 +1,6 @@
 package model
 
+// 文章 model
 type Article struct {
 	*Model
 	Title         string `json:"title"`
