@@ -36,8 +36,14 @@ func NewDBEngine(databaseSetting *setting.DatabaseSettingS) (*gorm.DB, error) {
 		return nil, err
 	}
 
+	// debug 模式下，输出详细日志
 	if global.ServerSetting.RunMode == "debug" {
 		db.LogMode(true)
 	}
 
+	db.SingularTable(true)
+	db.DB().SetMaxIdleConns(databaseSetting.MaxIdleConns)
+	db.DB().SetMaxOpenConns(databaseSetting.MaxOpenConns)
+
+	return db, nil
 }
