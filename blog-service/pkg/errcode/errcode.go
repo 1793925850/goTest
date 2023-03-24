@@ -75,6 +75,7 @@ func (e *Error) WithDetails(details ...string) *Error {
 	return &newError
 }
 
+// StatusCode 特定错误码到状态码的转换
 func (e *Error) StatusCode() int {
 	switch e.Code() {
 	case Success.Code():
