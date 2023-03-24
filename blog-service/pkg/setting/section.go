@@ -37,6 +37,7 @@ var sections = make(map[string]interface{})
 // ReadSection 读取区段配置
 func (s *Setting) ReadSection(k string, v interface{}) error {
 	// UnmarshalKey 获取单个键并将其解组为 Struct
+	// UnmarshalKey 根据 k，来找到数据并解析加载到变量 v 中
 	err := s.vp.UnmarshalKey(k, v)
 	if err != nil {
 		return err
