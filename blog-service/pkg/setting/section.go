@@ -43,4 +43,7 @@ func (s *Setting) ReadSection(k string, v interface{}) error {
 	return nil
 }
 
-func (s *Setting) ReloadAllSection() error {}
+func (s *Setting) ReloadAllSection() error {
+
+	return nil
+}
