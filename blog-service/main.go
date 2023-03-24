@@ -1,6 +1,7 @@
 package main
 
 import (
+	"blog-service/internal/model"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
@@ -42,7 +43,7 @@ func init() {
 	}
 }
 
-// setupSetting 初始化全局 Setting 变量
+// setupSetting 初始化全局变量：Setting
 func setupSetting() error {
 	s, err := setting.NewSetting("configs")
 	if err != nil {
@@ -66,6 +67,18 @@ func setupSetting() error {
 
 	global.ServerSetting.ReadTimeout *= time.Second
 	global.ServerSetting.WriterTimeout *= time.Second
+
+	return nil
+}
+
+// setupDBEngine 初始化全局变量：DBEngine
+func setupDBEngine() error {
+	var err error
+
+	global.DBEngine, err = model.NewDBEngine(global.DatabaseSetting)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
