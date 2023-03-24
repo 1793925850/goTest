@@ -18,7 +18,7 @@ func NewSetting(configs ...string) (*Setting, error) {
 
 	// SetConfigName 设置配置文件的名称。不包括扩展。
 	vp.SetConfigName("config")
-	for _, config := range configs {
+	for _, config := range configs { // range 相当于进入了文件夹，所以输入参数必须是配置文件所在的文件夹
 		if config != "" {
 			// AddConfigPath 为 Viper 添加一个路径，以便在中搜索配置文件
 			vp.AddConfigPath(config)
