@@ -132,7 +132,7 @@ func (l *Logger) WithCallersFrames() *Logger {
 	return ll
 }
 
-// WithTrace 设置
+// WithTrace 设置性能分析
 func (l *Logger) WithTrace() *Logger {
 	ginCtx, ok := l.ctx.(*gin.Context)
 	if ok {
