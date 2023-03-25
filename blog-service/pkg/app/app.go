@@ -52,4 +52,16 @@ func (r *Response) ToResponseList(list interface{}, totalRows int) {
 	})
 }
 
-func (r *Response) ToErrorResponse(err *errcode.Error)
+func (r *Response) ToErrorResponse(err *errcode.Error) {
+	response := gin.H{
+		"code": err.Code(),
+		"msg":  err.Msg(),
+	}
+	details := err.Details()
+
+	if len(details) > 0 { // 也就是可能不止返回一条错误信息
+		response["details"] = details
+	}
+
+	r.Ctx.JSON(err.StatusCode(), response)
+}
