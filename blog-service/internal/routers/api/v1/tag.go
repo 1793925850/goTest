@@ -1,5 +1,9 @@
 package v1
 
+/**
+标签方法
+*/
+
 import "github.com/gin-gonic/gin"
 
 type Tag struct{}

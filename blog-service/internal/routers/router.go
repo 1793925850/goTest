@@ -1,13 +1,16 @@
 package routers
 
-// 路由
+/**
+路由
+*/
 
 import (
-	v1 "blog-service/internal/routers/api/v1"
+	"blog-service/internal/routers/api/v1"
 
 	"github.com/gin-gonic/gin"
 )
 
+// NewRouter 初始化路由
 func NewRouter() *gin.Engine {
 	r := gin.New()
 
@@ -17,6 +20,7 @@ func NewRouter() *gin.Engine {
 	tag := v1.NewTag()
 	article := v1.NewArticle()
 
+	// 一个路由组里可以添加所有具有通用中间件或相同路径前缀的路由
 	apiv1 := r.Group("/api/v1")
 	{
 		// HTTP 标签管理路径

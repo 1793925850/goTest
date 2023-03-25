@@ -1,5 +1,9 @@
 package v1
 
+/**
+文章方法
+*/
+
 import "github.com/gin-gonic/gin"
 
 type Article struct{}
