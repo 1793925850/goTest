@@ -1,6 +1,6 @@
 package convert
 
-// 字符串转其他类型
+// 类型转换
 
 import "strconv"
 
