@@ -137,6 +137,8 @@ func (l *Logger) WithTrace() *Logger {
 	ginCtx, ok := l.ctx.(*gin.Context)
 	if ok {
 		return l.WithFields(Fields{
+			// Must 函数是一种辅助函数，用于在程序中检查错误并进行恐慌，目的是尽早发现程序错误并结束程序运行
+			// MustGet 相当于在 Get 函数中用到了 Must 函数来检查错误
 			"trace_id": ginCtx.MustGet("X-Trace-ID"),
 			"span_id":  ginCtx.MustGet("X-Span-ID"),
 		})
