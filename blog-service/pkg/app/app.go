@@ -12,10 +12,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Response 封装响应结构体
 type Response struct {
 	Ctx *gin.Context
 }
 
+// Pager 封装有关网页的参数
 type Pager struct {
 	// 页码
 	Page int `json:"page"`
