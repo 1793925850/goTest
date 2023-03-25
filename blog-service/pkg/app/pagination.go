@@ -20,7 +20,7 @@ func GetPage(c *gin.Context) int {
 	return page
 }
 
-// GetPageSize 获得每页显示的数量，这里的页并不是指内存页
+// GetPageSize 获得每页显示的数据条数，即每页显示多少条数据
 func GetPageSize(c *gin.Context) int {
 	pageSize := convert.StrTo(c.Query("page_size")).MustInt()
 	if pageSize <= 0 {
