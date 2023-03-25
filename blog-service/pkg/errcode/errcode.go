@@ -63,7 +63,7 @@ func (e *Error) Details() []string {
 	return e.details
 }
 
-// WithDetails 通过给定的详细错误信息，新建一个新的错误实例
+// WithDetails 通过给定的详细错误信息，初始化一个新的错误实例
 func (e *Error) WithDetails(details ...string) *Error {
 	newError := *e // 将指针的值赋值给 newError
 
@@ -85,7 +85,7 @@ func (e *Error) StatusCode() int {
 	case InvalidParams.Code():
 		return http.StatusBadRequest
 	case UnauthorizedAuthNotExist.Code():
-		// fallthrough 会不管下一层的 case 条件直接进行执行
+		// fallthrough 会无视下一层的 case 条件直接进行执行
 		fallthrough
 	case UnauthorizedTokenError.Code():
 		fallthrough

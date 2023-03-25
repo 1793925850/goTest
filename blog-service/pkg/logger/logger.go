@@ -1,16 +1,19 @@
 package logger
 
-// 日志写入
+/**
+日志写入
+*/
 
 import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"io"
 	"log"
 	"runtime" // runtime 包提供和 go 运行时环境的互操作
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 // Level 日志等级
@@ -51,10 +54,10 @@ func (l *Level) String() string {
 
 // Logger 日志的结构体
 type Logger struct {
-	newLogger *log.Logger
-	ctx       context.Context
-	fields    Fields
-	callers   []string
+	newLogger *log.Logger     // 一个用于操作的日志对象
+	ctx       context.Context // 上下文
+	fields    Fields          // 日志公共字段
+	callers   []string        // 调用栈信息
 }
 
 // NewLogger 初始化 Logger 实例

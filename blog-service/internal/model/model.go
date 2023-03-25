@@ -13,12 +13,12 @@ import (
 // 公共 model
 type Model struct {
 	ID         uint32 `gorm:"primary_key" json:"id"`
-	CreatedBy  string `json:"created_by"`
-	ModifiedBy string `json:"modified_by"`
-	CreatedOn  uint32 `json:"created_on"`
-	ModifiedOn uint32 `json:"modified_on"`
-	DeletedOn  uint32 `json:"deleted_on"`
-	IsDel      uint8  `json:"is_del"`
+	CreatedBy  string `json:"created_by"`  // 创建人
+	ModifiedBy string `json:"modified_by"` // 修改人
+	CreatedOn  uint32 `json:"created_on"`  // 创建时间
+	ModifiedOn uint32 `json:"modified_on"` // 修改时间
+	DeletedOn  uint32 `json:"deleted_on"`  // 删除时间
+	IsDel      uint8  `json:"is_del"`      // 是否删除
 }
 
 // NewDBEngine 连接数据库，初始化数据库引擎
