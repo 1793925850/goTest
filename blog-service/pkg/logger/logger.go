@@ -142,7 +142,7 @@ func (l *Logger) WithTrace() *Logger {
 
 			// 这里的意思是，在 ok 的情况下，却无法根据键来得到值，直接让程序在这里崩溃
 			"trace_id": ginCtx.MustGet("X-Trace-ID"),
-			"span_id":  ginCtx.MustGet("X-Span-ID"),
+			"span_id":  ginCtx.MustGet("X-Span-ID"), // span是 golang 内存管理的基本单位，每个 span 管理指定规格（以 page 为单位）的内存块
 		})
 	}
 
