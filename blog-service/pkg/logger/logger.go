@@ -139,6 +139,8 @@ func (l *Logger) WithTrace() *Logger {
 		return l.WithFields(Fields{
 			// Must 函数是一种辅助函数，用于在程序中检查错误并进行恐慌，目的是尽早发现程序错误并结束程序运行
 			// MustGet 相当于在 Get 函数中用到了 Must 函数来检查错误
+
+			// 这里的意思是，在 ok 的情况下，却无法根据键来得到值，直接让程序在这里崩溃
 			"trace_id": ginCtx.MustGet("X-Trace-ID"),
 			"span_id":  ginCtx.MustGet("X-Span-ID"),
 		})
