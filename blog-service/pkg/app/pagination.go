@@ -20,7 +20,7 @@ func GetPage(c *gin.Context) int {
 	return page
 }
 
-// GetPageSize 获得每页显示的数量
+// GetPageSize 获得每页显示的数量，这里的页并不是指内存页
 func GetPageSize(c *gin.Context) int {
 	pageSize := convert.StrTo(c.Query("page_size")).MustInt()
 	if pageSize <= 0 {
@@ -29,9 +29,11 @@ func GetPageSize(c *gin.Context) int {
 	if pageSize > global.AppSetting.MaxPageSize {
 		return global.AppSetting.MaxPageSize
 	}
+
+	return pageSize
 }
 
-// GetPageOffset 获得页偏值，从0开始的
+// GetPageOffset 获得页偏移量，从0开始的
 func GetPageOffset(page, PageSize int) int {
 	result := 0
 
