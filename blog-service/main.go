@@ -1,6 +1,8 @@
 package main
 
 import (
+	"blog-service/pkg/logger"
+	"gopkg.in/natefinch/lumberjack.v2"
 	"log"
 	"net/http"
 	"time"
@@ -45,8 +47,27 @@ func init() {
 
 	err = setupDBEngine()
 	if err != nil {
-		log.Fatalf("init.setupSetting err: %v", err)
+		log.Fatalf("init.setupDBEngine err: %v", err)
 	}
+
+	err = setupLogger()
+	if err != nil {
+		log.Fatalf("init.setupLogger err: %v", err)
+	}
+}
+
+// setupLogger 初始化全局变量：Logger
+func setupLogger() error {
+	fileName := global.AppSetting.LogSavePath + "/" + global.AppSetting.LogFileName + global.AppSetting.LogFileExt
+
+	global.Logger = logger.NewLogger(&lumberjack.Logger{
+		Filename:  fileName,
+		MaxSize:   20, // 单位 MB
+		MaxAge:    2,  // 单位 天
+		LocalTime: true,
+	}, "", log.LstdFlags).WithCaller(2)
+
+	return nil
 }
 
 // setupSetting 初始化全局变量：Setting
