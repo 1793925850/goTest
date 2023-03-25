@@ -4,10 +4,12 @@ package logger
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 	"log"
-	"runtime"
+	"runtime" // runtime 包提供和 go 运行时环境的互操作
+	"time"
 )
 
 // Level 日志等级
@@ -65,7 +67,7 @@ func NewLogger(w io.Writer, prefix string, flag int) *Logger {
 
 // clone 深拷贝
 func (l *Logger) clone() *Logger {
-	nl := *l
+	nl := *l // struct 的复制默认深拷贝
 
 	return &nl
 }
@@ -129,6 +131,43 @@ func (l *Logger) WithCallersFrames() *Logger {
 	return ll
 }
 
+// JSONFormat 日志的 JSON 格式化
+func (l *Logger) JSONFormat(level Level, message string) map[string]interface{} {
+	data := make(Fields, len(l.fields)+4)
 
+	data["level"] = level.String()
+	data["time"] = time.Now().Local().UnixNano() // 这里的值是以纳秒为单位的时间，数据类型为 int64
+	data["message"] = message
+	data["callers"] = l.callers
 
+	if len(l.fields) > 0 {
+		for k, v := range l.fields {
+			if _, ok := data[k]; !ok {
+				data[k] = v
+			}
+		}
+	}
 
+	return data
+}
+
+// Output 日志输出
+func (l *Logger) Output(level Level, message string) {
+	body, _ := json.Marshal(l.JSONFormat(level, message))
+	content := string(body)
+
+	switch level {
+	case LevelDebug:
+		l.newLogger.Print(content)
+	case LevelInfo:
+		l.newLogger.Print(content)
+	case LevelWarn:
+		l.newLogger.Print(content)
+	case LevelError:
+		l.newLogger.Print(content)
+	case LevelFatal:
+		l.newLogger.Fatal(content)
+	case LevelPanic:
+		l.newLogger.Panic(content)
+	}
+}
