@@ -1,6 +1,8 @@
 package app
 
-// 分页处理
+/**
+分页处理
+*/
 
 import (
 	"blog-service/global"
