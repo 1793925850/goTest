@@ -134,7 +134,7 @@ func (l *Logger) WithCallersFrames() *Logger {
 
 // WithTrace 设置性能分析的日志公共字段
 func (l *Logger) WithTrace() *Logger {
-	ginCtx, ok := l.ctx.(*gin.Context) // 这里使用了强制类型转换
+	ginCtx, ok := l.ctx.(*gin.Context) // 这里使用了类型断言，即系统自动视 ctx 为 *gin.Context 类型
 	if ok {
 		return l.WithFields(Fields{
 			// Must 函数是一种辅助函数，用于在程序中检查错误并进行恐慌，目的是尽早发现程序错误并结束程序运行
