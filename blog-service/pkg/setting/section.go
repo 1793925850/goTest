@@ -31,9 +31,9 @@ type DatabaseSettingS struct {
 	DBName       string // 数据库名
 	TablePrefix  string // 表前缀
 	Charset      string // 字符集
-	ParseTime    bool   //
-	MaxIdleConns int    //
-	MaxOpenConns int    //
+	ParseTime    bool   // 表示是否将 MySql 的时间自动转换为 time.Time；如果为 false，则转换为 []byte 或 string
+	MaxIdleConns int    // 连接池中保持的最大空闲连接数
+	MaxOpenConns int    // 打开数据库的最大连接数
 }
 
 // sections 记录区段键，同时也用来保存区段配置的值
