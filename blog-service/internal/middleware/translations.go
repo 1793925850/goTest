@@ -12,6 +12,10 @@ import (
 	zh_translations "github.com/go-playground/validator/v10/translations/zh"
 )
 
+/**
+入参校验以及对错误信息的国际化处理
+*/
+
 func Translations() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		uni := ut.New(en.New(), zh.New(), zh_Hant_TW.New())
