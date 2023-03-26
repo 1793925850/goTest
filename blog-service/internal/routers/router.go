@@ -20,7 +20,7 @@ func NewRouter() *gin.Engine {
 
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
-	r.Use(middleware.Translations())
+	r.Use(middleware.Translations()) // 完成自定义验证器注册、验证器初始化、错误提示多语言等功能
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	tag := v1.NewTag()
