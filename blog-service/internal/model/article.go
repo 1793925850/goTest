@@ -1,5 +1,7 @@
 package model
 
+import "blog-service/pkg/app"
+
 // 文章 model
 type Article struct {
 	*Model
@@ -8,6 +10,11 @@ type Article struct {
 	Content       string `json:"content"`         // 文章内容
 	CoverImageUrl string `json:"cover_image_url"` // 封面图片地址
 	State         uint8  `json:"state"`           // 状态
+}
+
+type ArticleSwagger struct {
+	List  []*Article
+	Pager *app.Pager
 }
 
 func (a Article) TableName() string {
