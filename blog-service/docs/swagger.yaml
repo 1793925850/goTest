@@ -1,4 +1,16 @@
 definitions:
+  app.Pager:
+    properties:
+      page:
+        description: 页码
+        type: integer
+      page_size:
+        description: 每页数量
+        type: integer
+      total_rows:
+        description: 总行数
+        type: integer
+    type: object
   errcode.Error:
     type: object
   model.Article:
@@ -39,6 +51,15 @@ definitions:
         description: 文章标题
         type: string
     type: object
+  model.ArticleSwagger:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/model.Article'
+        type: array
+      pager:
+        $ref: '#/definitions/app.Pager'
+    type: object
   model.Tag:
     properties:
       created_by:
@@ -67,6 +88,15 @@ definitions:
       state:
         description: 状态
         type: integer
+    type: object
+  model.TagSwagger:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/model.Tag'
+        type: array
+      pager:
+        $ref: '#/definitions/app.Pager'
     type: object
 info:
   contact: {}
@@ -104,7 +134,7 @@ paths:
         "200":
           description: 成功
           schema:
-            $ref: '#/definitions/model.Article'
+            $ref: '#/definitions/model.ArticleSwagger'
         "400":
           description: 请求错误
           schema:
@@ -298,7 +328,7 @@ paths:
         "200":
           description: 成功
           schema:
-            $ref: '#/definitions/model.Tag'
+            $ref: '#/definitions/model.TagSwagger'
         "400":
           description: 请求错误
           schema:

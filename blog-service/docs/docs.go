@@ -59,7 +59,7 @@ const docTemplate = `{
                     "200": {
                         "description": "成功",
                         "schema": {
-                            "$ref": "#/definitions/model.Article"
+                            "$ref": "#/definitions/model.ArticleSwagger"
                         }
                     },
                     "400": {
@@ -357,7 +357,7 @@ const docTemplate = `{
                     "200": {
                         "description": "成功",
                         "schema": {
-                            "$ref": "#/definitions/model.Tag"
+                            "$ref": "#/definitions/model.TagSwagger"
                         }
                     },
                     "400": {
@@ -545,6 +545,23 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "app.Pager": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "description": "页码",
+                    "type": "integer"
+                },
+                "page_size": {
+                    "description": "每页数量",
+                    "type": "integer"
+                },
+                "total_rows": {
+                    "description": "总行数",
+                    "type": "integer"
+                }
+            }
+        },
         "errcode.Error": {
             "type": "object"
         },
@@ -600,6 +617,20 @@ const docTemplate = `{
                 }
             }
         },
+        "model.ArticleSwagger": {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Article"
+                    }
+                },
+                "pager": {
+                    "$ref": "#/definitions/app.Pager"
+                }
+            }
+        },
         "model.Tag": {
             "type": "object",
             "properties": {
@@ -637,6 +668,20 @@ const docTemplate = `{
                 "state": {
                     "description": "状态",
                     "type": "integer"
+                }
+            }
+        },
+        "model.TagSwagger": {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Tag"
+                    }
+                },
+                "pager": {
+                    "$ref": "#/definitions/app.Pager"
                 }
             }
         }
