@@ -17,7 +17,7 @@ func Translations() gin.HandlerFunc {
 		uni := ut.New(en.New(), zh.New(), zh_Hant_TW.New())
 		locale := c.GetHeader("locale")
 		trans, _ := uni.GetTranslator(locale)
-		v, ok := binding.Validator.Engine().(*validator.Validate) // 类型断言
+		v, ok := binding.Validator.Engine().(*validator.Validate) // 初始化验证器，用到了类型断言
 
 		if ok {
 			switch locale {
