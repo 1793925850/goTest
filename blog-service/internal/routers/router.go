@@ -5,9 +5,12 @@ package routers
 */
 
 import (
+	_ "blog-service/docs"
 	"blog-service/internal/routers/api/v1"
 
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 // NewRouter 初始化路由
@@ -16,6 +19,7 @@ func NewRouter() *gin.Engine {
 
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	tag := v1.NewTag()
 	article := v1.NewArticle()
