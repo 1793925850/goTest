@@ -3,12 +3,12 @@ package middleware
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/go-playground/locales/en"
+	"github.com/go-playground/locales/en" // locales 是一个多语言包
 	"github.com/go-playground/locales/zh"
 	"github.com/go-playground/locales/zh_Hant_TW"
-	"github.com/go-playground/universal-translator"
-	"github.com/go-playground/validator/v10"
-	en_translations "github.com/go-playground/validator/v10/translations/en"
+	"github.com/go-playground/universal-translator"                          // 通用翻译器
+	"github.com/go-playground/validator/v10"                                 // validator 包是一个基于标签对结构体和字段进行值验证的一个验证器
+	en_translations "github.com/go-playground/validator/v10/translations/en" // validator 的翻译器
 	zh_translations "github.com/go-playground/validator/v10/translations/zh"
 )
 
