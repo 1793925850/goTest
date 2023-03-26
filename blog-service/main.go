@@ -22,6 +22,10 @@ var (
 	isVersion bool
 )
 
+// @title 禁筱的博客
+// @version 1.0
+// @description 欢迎来到禁筱的博客
+// @termsOfService https://github.com/1793925850/goTest
 func main() {
 	gin.SetMode(global.ServerSetting.RunMode)
 
