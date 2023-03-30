@@ -41,10 +41,13 @@ func (t Tag) List(c *gin.Context) {
 
 		errRsp := errcode.InvalidParams.WithDetails(errs.Errors()...)
 
-		reponse.ToErrorResponse(gin.H{})
-		
+		reponse.ToErrorResponse(errRsp)
+
 		return
 	}
+	reponse.ToErrorResponse(gin.H{})
+
+	return
 }
 
 // @Summary 新增标签
