@@ -33,7 +33,7 @@ func (t Tag) List(c *gin.Context) {
 		Name  string `form:"name" binding:"max=100"`
 		State uint8  `form:"state,default=1" binding:"oneof=0 1"`
 	}{}
-	reponse := app.NewResponse(c)
+	response := app.NewResponse(c)
 	valid, errs := app.BindAndValid(c, &param)
 
 	if !valid {
@@ -41,11 +41,11 @@ func (t Tag) List(c *gin.Context) {
 
 		errRsp := errcode.InvalidParams.WithDetails(errs.Errors()...)
 
-		reponse.ToErrorResponse(errRsp)
+		response.ToErrorResponse(errRsp)
 
 		return
 	}
-	reponse.ToResponse(gin.H{})
+	response.ToResponse(gin.H{})
 
 	return
 }
