@@ -45,7 +45,7 @@ func (t Tag) List(c *gin.Context) {
 
 		return
 	}
-	reponse.ToErrorResponse(gin.H{})
+	reponse.ToResponse(gin.H{})
 
 	return
 }
