@@ -49,3 +49,7 @@ func NewDBEngine(databaseSetting *setting.DatabaseSettingS) (*gorm.DB, error) {
 
 	return db, nil
 }
+
+func updateTimeStampForCreateCallback() {
+
+}
