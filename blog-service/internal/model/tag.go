@@ -13,7 +13,7 @@ import (
 // 标签 model
 type Tag struct {
 	*Model        // 复用公共 Model
-	Name   string `json:"name"`  // 标签名称
+	Name   string `json:"name"` // 标签名称
 	State  uint8  `json:"state"` // 状态
 }
 
@@ -93,11 +93,13 @@ func (t Tag) Create(db *gorm.DB) error {
 	return db.Create(&t).Error
 }
 
+// Update 更新一个标签的信息
 func (t Tag) Update(db *gorm.DB, values interface{}) error {
 	// Model 会调用 TableName 方法来获取用来操作的表名
 	return db.Model(&t).Where("id = ? AND is_del = ?", t.ID, 0).Update(values).Error
 }
 
+// Delete 删除一条标签记录
 func (t Tag) Delete(db *gorm.DB) error {
-
+	return db.Where("id = ? AND is_del = ?", t.Model.ID, 0).Delete(&t).Error
 }
