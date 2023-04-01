@@ -6,7 +6,7 @@ import (
 )
 
 /**
-对业务层的 tag 所需的字段进行处理
+用于处理标签模块的 dao 操作
 */
 
 // GetTag 根据 tag 的 id 和 state 来获取某个标签
