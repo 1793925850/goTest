@@ -106,6 +106,7 @@ func deleteCallback(scope *gorm.Scope) {
 	}
 }
 
+// addExtraSpaceIfExist 用来为组装 sql 的语句添加字段之间的空格
 func addExtraSpaceIfExist(str string) string {
 	if str != "" {
 		return " " + str
