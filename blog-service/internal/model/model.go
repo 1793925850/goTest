@@ -51,6 +51,7 @@ func NewDBEngine(databaseSetting *setting.DatabaseSettingS) (*gorm.DB, error) {
 	return db, nil
 }
 
+// updateTimeStampForCreateCallback 新增行为的回调
 func updateTimeStampForCreateCallback(scope *gorm.Scope) {
 	if !scope.HasError() {
 		nowTime := time.Now().Unix()
@@ -63,12 +64,14 @@ func updateTimeStampForCreateCallback(scope *gorm.Scope) {
 	}
 }
 
+// updateTimeStampForUpdateCallback 更新行为的回调
 func updateTimeStampForUpdateCallback(scope *gorm.Scope) {
 	if _, ok := scope.Get("gorm:update_column"); !ok {
 		_ = scope.SetColumn("ModifiedOn", time.Now().Unix())
 	}
 }
 
+// deleteCallback 删除行为的回调
 func deleteCallback(scope *gorm.Scope) {
 	if !scope.HasError() {
 		var extraOption string
