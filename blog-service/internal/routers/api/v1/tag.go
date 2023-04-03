@@ -30,12 +30,12 @@ func NewTag() Tag {
 // @Router /api/v1/tags [get]
 func (t Tag) List(c *gin.Context) {
 	param := service.TagListRequest{}          // 初始化一个标签列表请求
-	reponse := app.NewResponse(c)              // 初始化一个响应
+	response := app.NewResponse(c)             // 初始化一个响应
 	valid, errs := app.BindAndValid(c, &param) // 进行入参校验和绑定
 
 	if !valid {
 		global.Logger.Errorf(c, "app.BindAndValid errs: %v", errs)
-		reponse.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
+		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
 		return
 	}
 
@@ -50,17 +50,17 @@ func (t Tag) List(c *gin.Context) {
 	})
 	if err != nil {
 		global.Logger.Errorf(c, "svc.CountTag err: %v", err)
-		reponse.ToErrorResponse(errcode.ErrorCountTagFail)
+		response.ToErrorResponse(errcode.ErrorCountTagFail)
 		return
 	}
 	tags, err := svc.GetTagList(&param, &pager) // 获取标签
 	if err != nil {
 		global.Logger.Errorf(c, "svc.GetTagList err: %v", err)
-		reponse.ToErrorResponse(errcode.ErrorGetTagListFail)
+		response.ToErrorResponse(errcode.ErrorGetTagListFail)
 		return
 	}
 
-	reponse.ToResponseList(tags, totalRows) // 返回相应列表
+	response.ToResponseList(tags, totalRows) // 返回相应列表
 	return
 }
 
