@@ -6,9 +6,9 @@ package v1
 
 import (
 	"blog-service/global"
+	"blog-service/internal/service"
 	"blog-service/pkg/app"
 	"blog-service/pkg/errcode"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -29,24 +29,38 @@ func NewTag() Tag {
 // @Failure 500 {object} errcode.Error "内部错误"
 // @Router /api/v1/tags [get]
 func (t Tag) List(c *gin.Context) {
-	param := struct {
-		Name  string `form:"name" binding:"max=100"`
-		State uint8  `form:"state,default=1" binding:"oneof=0 1"`
-	}{}
-	response := app.NewResponse(c)
+	param := service.TagListRequest{}
+	reponse := app.NewResponse(c)
 	valid, errs := app.BindAndValid(c, &param)
 
 	if !valid {
 		global.Logger.Errorf(c, "app.BindAndValid errs: %v", errs)
-
-		errRsp := errcode.InvalidParams.WithDetails(errs.Errors()...)
-
-		response.ToErrorResponse(errRsp)
-
+		reponse.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
 		return
 	}
-	response.ToResponse(gin.H{})
 
+	svc := service.New(c.Request.Context())
+	pager := app.Pager{
+		Page:     app.GetPage(c),
+		PageSize: app.GetPageSize(c),
+	}
+	totalRows, err := svc.CountTag(&service.CountTagRequest{
+		Name:  param.Name,
+		State: param.State,
+	})
+	if err != nil {
+		global.Logger.Errorf(c, "svc.CountTag err: %v", err)
+		reponse.ToErrorResponse(errcode.ErrorCountTagFail)
+		return
+	}
+	tags, err := svc.GetTagList(&param, &pager)
+	if err != nil {
+		global.Logger.Errorf(c, "svc.GetTagList err: %v", err)
+		reponse.ToErrorResponse(errcode.ErrorGetTagListFail)
+		return
+	}
+
+	reponse.ToResponseList(tags, totalRows)
 	return
 }
 
