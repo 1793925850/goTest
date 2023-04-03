@@ -63,7 +63,7 @@ func (e *Error) Details() []string {
 	return e.details
 }
 
-// WithDetails 通过给定的详细错误信息，初始化一个新的错误实例
+// WithDetails 给错误实例加上详细的错误信息
 func (e *Error) WithDetails(details ...string) *Error {
 	newError := *e // 将指针的值赋值给 newError
 
