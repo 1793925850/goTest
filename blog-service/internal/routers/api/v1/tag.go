@@ -29,9 +29,9 @@ func NewTag() Tag {
 // @Failure 500 {object} errcode.Error "内部错误"
 // @Router /api/v1/tags [get]
 func (t Tag) List(c *gin.Context) {
-	param := service.TagListRequest{}
-	reponse := app.NewResponse(c)
-	valid, errs := app.BindAndValid(c, &param)
+	param := service.TagListRequest{}          // 初始化一个标签列表请求
+	reponse := app.NewResponse(c)              // 初始化一个响应
+	valid, errs := app.BindAndValid(c, &param) // 进行入参校验和绑定
 
 	if !valid {
 		global.Logger.Errorf(c, "app.BindAndValid errs: %v", errs)
@@ -39,12 +39,12 @@ func (t Tag) List(c *gin.Context) {
 		return
 	}
 
-	svc := service.New(c.Request.Context())
+	svc := service.New(c.Request.Context()) // 初始化一个 Service 实例
 	pager := app.Pager{
 		Page:     app.GetPage(c),
 		PageSize: app.GetPageSize(c),
 	}
-	totalRows, err := svc.CountTag(&service.CountTagRequest{
+	totalRows, err := svc.CountTag(&service.CountTagRequest{ // 统计标签
 		Name:  param.Name,
 		State: param.State,
 	})
@@ -53,14 +53,14 @@ func (t Tag) List(c *gin.Context) {
 		reponse.ToErrorResponse(errcode.ErrorCountTagFail)
 		return
 	}
-	tags, err := svc.GetTagList(&param, &pager)
+	tags, err := svc.GetTagList(&param, &pager) // 获取标签
 	if err != nil {
 		global.Logger.Errorf(c, "svc.GetTagList err: %v", err)
 		reponse.ToErrorResponse(errcode.ErrorGetTagListFail)
 		return
 	}
 
-	reponse.ToResponseList(tags, totalRows)
+	reponse.ToResponseList(tags, totalRows) // 返回相应列表
 	return
 }
 
