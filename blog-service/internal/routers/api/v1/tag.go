@@ -8,6 +8,7 @@ import (
 	"blog-service/global"
 	"blog-service/internal/service"
 	"blog-service/pkg/app"
+	"blog-service/pkg/convert"
 	"blog-service/pkg/errcode"
 	"github.com/gin-gonic/gin"
 )
@@ -80,7 +81,19 @@ func (t Tag) Create(c *gin.Context) {
 	if !valid {
 		global.Logger.Errorf(c, "app.BindAndValid errs: %v", errs)
 		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
+		return
 	}
+
+	svc := service.New(c.Request.Context())
+	err := svc.CreateTag(&param)
+	if err != nil {
+		global.Logger.Errorf(c, "svc.CreateTag err: %v", err)
+		response.ToErrorResponse(errcode.ErrorCreateTagFail)
+		return
+	}
+
+	response.ToResponse(gin.H{})
+	return
 }
 
 // @Summary 更新标签
@@ -93,7 +106,31 @@ func (t Tag) Create(c *gin.Context) {
 // @Failure 400 {object} errcode.Error "请求错误"
 // @Failure 500 {object} errcode.Error "内部错误"
 // @Router /api/v1/tags/{id} [put]
-func (t Tag) Update(c *gin.Context) {}
+func (t Tag) Update(c *gin.Context) {
+	param := service.UpdateTagRequest{
+		// 一般这里的属性赋值都是由下面的验证绑定来完成
+		// 但这次由于需要把 id 的值从 string 转换成 uint32，所以得写
+		ID: convert.StrTo(c.Param("id")).MustUInt32(),
+	}
+	response := app.NewResponse(c)
+	valid, errs := app.BindAndValid(c, &param) // 这里 c 的 id 是 string，所以不会覆盖 param 上已存在的 ID
+	if !valid {
+		global.Logger.Errorf(c, "app.BindAndValid errs: %v", errs)
+		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
+		return
+	}
+
+	svc := service.New(c.Request.Context())
+	err := svc.UpdateTag(&param)
+	if err != nil {
+		global.Logger.Errorf(c, "svc.UpdateTag err: %v", err)
+		response.ToErrorResponse(errcode.ErrorUpdateTagFail)
+		return
+	}
+
+	response.ToResponse(gin.H{})
+	return
+}
 
 // @Summary 删除标签
 // @Produce json
