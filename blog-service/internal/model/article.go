@@ -1,6 +1,9 @@
 package model
 
-import "blog-service/pkg/app"
+import (
+	"blog-service/pkg/app"
+	"github.com/jinzhu/gorm"
+)
 
 // 文章 model
 type Article struct {
@@ -19,4 +22,20 @@ type ArticleSwagger struct {
 
 func (a Article) TableName() string {
 	return "blog_article"
+}
+
+func (a Article) Create(db *gorm.DB) (*Article, error) {
+
+}
+
+func (a Article) Update(db *gorm.DB, values interface{}) error {
+
+}
+
+func (a Article) Get(db *gorm.DB) (Article, error) {
+
+}
+
+func (a Article) Delete(db *gorm.DB) error {
+
 }
