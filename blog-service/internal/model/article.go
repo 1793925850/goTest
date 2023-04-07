@@ -15,6 +15,16 @@ type Article struct {
 	State         uint8  `json:"state"`           // 状态
 }
 
+type ArticleRow struct {
+	ArticleID     uint32
+	TagID         uint32
+	TagName       string
+	ArticleTitle  string
+	ArticleDesc   string
+	CoverImageUrl string
+	Content       string
+}
+
 type ArticleSwagger struct {
 	List  []*Article
 	Pager *app.Pager
@@ -38,4 +48,12 @@ func (a Article) Get(db *gorm.DB) (Article, error) {
 
 func (a Article) Delete(db *gorm.DB) error {
 
+}
+
+func (a Article) ListByTagID(db *gorm.DB, tagID uint32, pageOffset, pageSize int) ([]*ArticleRow, error) {
+
+}
+
+func (a Article) CountByTagID(db *gorm.DB, tagID uint32) (int, error) {
+	
 }
