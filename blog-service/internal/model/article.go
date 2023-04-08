@@ -73,7 +73,7 @@ func (a Article) Get(db *gorm.DB) (Article, error) {
 // Delete 删除一篇文章
 func (a Article) Delete(db *gorm.DB) error {
 	if err := db.Where("id = ? AND is_del = ?", a.ID, 0).Delete(&a).Error; err != nil {
-		
+
 	}
 }
 
