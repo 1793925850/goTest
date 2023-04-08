@@ -20,7 +20,7 @@ type Article struct {
 	State         uint8  `json:"state"`           // 状态
 }
 
-// ArticleRow 实际需要的文章 model
+// ArticleRow 实际需要的文章? model
 type ArticleRow struct {
 	ArticleID     uint32
 	TagID         uint32
