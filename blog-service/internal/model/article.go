@@ -2,6 +2,7 @@ package model
 
 import (
 	"blog-service/pkg/app"
+
 	"github.com/jinzhu/gorm"
 )
 
