@@ -15,9 +15,11 @@ type Article struct {
 	Content       string `json:"content"`
 	CoverImageUrl string `json:"cover_image_url"`
 	CreatedBy     string `json:"created_by"`
+	ModifiedBy    string `json:"modified_by"`
 	State         uint8  `json:"state"`
 }
 
+// CreateArticle 创建文章
 func (d *Dao) CreateArticle(param *Article) (*model.Article, error) {
 	article := model.Article{
 		Title:         param.Title,
@@ -29,4 +31,11 @@ func (d *Dao) CreateArticle(param *Article) (*model.Article, error) {
 	}
 
 	return article.Create(d.engine)
+}
+
+func (d *Dao) UpdateArticle(param *Article) error {
+	article := model.Article{Model: &model.Model{ID: param.ID}}
+	values := map[string]interface{}{
+		"modified_by": param.,
+	}
 }
