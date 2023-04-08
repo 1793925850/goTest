@@ -58,12 +58,23 @@ func (a Article) Update(db *gorm.DB, values interface{}) error {
 
 // Get 获取一篇文章
 func (a Article) Get(db *gorm.DB) (Article, error) {
+	var article Article
 
+	db = db.Where("id = ? AND state = ? AND is_del = ?", a.ID, a.State, 0)
+
+	err := db.First(&article).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return article, err
+	}
+
+	return article, nil
 }
 
 // Delete 删除一篇文章
 func (a Article) Delete(db *gorm.DB) error {
-
+	if err := db.Where("id = ? AND is_del = ?", a.ID, 0).Delete(&a).Error; err != nil {
+		
+	}
 }
 
 // ListByTagID 通过标签ID来获得指定一系列文章
