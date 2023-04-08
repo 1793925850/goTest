@@ -1,5 +1,7 @@
 package service
 
+import "blog-service/internal/model"
+
 /**
 文章接口
 */
@@ -44,4 +46,24 @@ type UpdateArticleRequest struct {
 // DeleteArticleRequest 删除文章请求
 type DeleteArticleRequest struct {
 	ID uint32 `form:"id" binding:"required,gte=1"`
+}
+
+// Article 服务层的文章 model
+type Article struct {
+	ID            uint32     `json:"id"`
+	Title         string     `json:"title"`
+	Desc          string     `json:"desc"`
+	Content       string     `json:"content"`
+	CoverImageUrl string     `json:"cover_image_url"`
+	State         uint8      `json:"state"`
+	Tag           *model.Tag `json:"tag"`
+}
+
+func (svc *Service) GetArticle(param *ArticleRequest) (*Article, error) {
+	article, err := svc.dao.GetArticle(param.ID, param.State)
+	if err != nil {
+		return nil, err
+	}
+
+	articleTag, err:=svc.dao.
 }
