@@ -9,7 +9,7 @@ import (
 model 层的封装
 */
 
-// 文章 model
+// Article 文章 model
 type Article struct {
 	*Model
 	Title         string `json:"title"`           // 文章标题
@@ -19,6 +19,7 @@ type Article struct {
 	State         uint8  `json:"state"`           // 状态
 }
 
+// ArticleRow 实际需要的文章 model
 type ArticleRow struct {
 	ArticleID     uint32
 	TagID         uint32
@@ -29,6 +30,7 @@ type ArticleRow struct {
 	Content       string
 }
 
+// ArticleSwagger 文章的参考文档模型
 type ArticleSwagger struct {
 	List  []*Article
 	Pager *app.Pager
