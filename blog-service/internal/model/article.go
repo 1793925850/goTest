@@ -110,9 +110,21 @@ func (a Article) ListByTagID(db *gorm.DB, tagID uint32, pageOffset, pageSize int
 
 		articles = append(articles, r)
 	}
+
+	return articles, nil
 }
 
 // CountByTagID 统计有标签ID的文章的数量
 func (a Article) CountByTagID(db *gorm.DB, tagID uint32) (int, error) {
+	var count int
+	err := db.Table(ArticleTag{}.TableName()+" AS at").
+		Joins("LEFT JOIN `"+Tag{}.TableName()+"` AS t ON at.tag_id = t.id").
+		Joins("LEFT JOIN `"+Article{}.TableName()+"` AS ar ON at.article_id = ar.id").
+		Where("at.`tag_id` = ? AND ar.state = ? AND ar.is_del = ?", tagID, a.State, 0).
+		Count(&count).Error
+	if err != nil {
+		return 0, err
+	}
 
+	return count, nil
 }
