@@ -14,12 +14,25 @@ func (a ArticleTag) TableName() string {
 	return "blog_article_tag"
 }
 
+// GetByAID 通过文章ID来获取文章
 func (a ArticleTag) GetByAID(db *gorm.DB) (ArticleTag, error) {
+	var articleTag ArticleTag
+	err := db.Where("article_id = ? AND is_del = ?", a.ArticleID, 0).First(&articleTag).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return articleTag, err
+	}
 
+	return articleTag, nil
 }
 
+// ListByTID 通过标签ID来罗列文章
 func (a ArticleTag) ListByTID(db *gorm.DB) ([]*ArticleTag, error) {
+	var articleTags []*ArticleTag
+	if err := db.Where("tag_id = ? AND is_del = ?", a.TagID, 0).Find(&articleTags).Error; err != nil {
+		return nil, err
+	}
 
+	return articleTags, nil
 }
 
 func (a ArticleTag) ListByAIDs(db *gorm.DB, articleIDs []uint32) ([]*ArticleTag, error) {
