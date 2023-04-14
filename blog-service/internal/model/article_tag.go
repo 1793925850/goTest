@@ -64,7 +64,7 @@ func (a ArticleTag) UpdateOne(db *gorm.DB, values interface{}) error {
 	return nil
 }
 
-// Delete 删除文章
+// Delete 根据主键ID删除文章
 func (a ArticleTag) Delete(db *gorm.DB) error {
 	if err := db.Where("id = ? AND is_del = ?", a.Model.ID, 0).Delete(&a).Error; err != nil {
 		return err
@@ -73,7 +73,7 @@ func (a ArticleTag) Delete(db *gorm.DB) error {
 	return nil
 }
 
-// DeleteOne 删除文章
+// DeleteOne 根据文章ID删除文章
 func (a ArticleTag) DeleteOne(db *gorm.DB) error {
 	if err := db.Where("article_id = ? AND is_del = ?", a.ArticleID, 0).Delete(&a).Limit(1).Error; err != nil {
 		return err
