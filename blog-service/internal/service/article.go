@@ -65,5 +65,5 @@ func (svc *Service) GetArticle(param *ArticleRequest) (*Article, error) {
 		return nil, err
 	}
 
-	articleTag, err := svc.dao
+	articleTag, err := svc.dao.
 }
