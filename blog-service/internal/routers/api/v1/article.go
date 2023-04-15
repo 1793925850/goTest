@@ -1,7 +1,7 @@
 package v1
 
 /**
-文章方法
+路由文章方法
 */
 
 import "github.com/gin-gonic/gin"
