@@ -11,6 +11,11 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
+const (
+	STATE_OPEN  = 1
+	STATE_CLOSE = 0
+)
+
 // 公共 model
 type Model struct {
 	ID         uint32 `gorm:"primary_key" json:"id"`
