@@ -16,11 +16,15 @@ type ServerSettingS struct {
 
 // AppSettingS 应用程序配置
 type AppSettingS struct {
-	DefaultPageSize int    // 默认每页数量
-	MaxPageSize     int    // 最大每页数量
-	LogSavePath     string // 日志保存路径
-	LogFileName     string // 日志文件名称
-	LogFileExt      string // 日志文件类型
+	DefaultPageSize      int      // 默认每页数量
+	MaxPageSize          int      // 最大每页数量
+	LogSavePath          string   // 日志保存路径
+	LogFileName          string   // 日志文件名称
+	LogFileExt           string   // 日志文件类型
+	UploadSavePath       string   // 上传文件的最终保存目录
+	UploadServerUrl      string   // 上传文件后用于展示的文件服务地址
+	UploadImageMaxSize   int      // 上传文件所允许的最大空间大小（MB）
+	UploadImageAllowExts []string // 上传文件所允许的文件后缀
 }
 
 type DatabaseSettingS struct {
