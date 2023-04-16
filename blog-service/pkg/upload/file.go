@@ -46,6 +46,7 @@ func GetServerUrl() string {
 
 // CheckSavePath 检查保存目录是否存在
 func CheckSavePath(dst string) bool {
+	// Stat 获取文件的描述信息
 	_, err := os.Stat(dst)
 
 	return os.IsNotExist(err)
@@ -92,6 +93,7 @@ func CheckPermission(dst string) bool {
 
 // CreateSavePath 创建保存上传文件的目录
 func CreateSavePath(dst string, perm os.FileMode) error {
+	// MkdirAll 通过传入的 perm（权限位），递归创建所需的所有目录结构
 	err := os.MkdirAll(dst, perm)
 	if err != nil {
 		return err
@@ -102,6 +104,7 @@ func CreateSavePath(dst string, perm os.FileMode) error {
 
 // SaveFile 保存上传的文件
 func SaveFile(file *multipart.FileHeader, dst string) error {
+	// Open 打开源地址文件
 	src, err := file.Open()
 	if err != nil {
 		return err
@@ -109,6 +112,7 @@ func SaveFile(file *multipart.FileHeader, dst string) error {
 
 	defer src.Close()
 
+	// Create 创建目标地址为 dst 的文件
 	out, err := os.Create(dst)
 	if err != nil {
 		return err
@@ -116,6 +120,7 @@ func SaveFile(file *multipart.FileHeader, dst string) error {
 
 	defer out.Close()
 
+	// Copy 进行两者之间文件内容的拷贝，即将 src 的内容写到 out 中
 	_, err = io.Copy(out, src)
 	return err
 }
