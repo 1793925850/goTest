@@ -25,6 +25,7 @@ func NewUpload() Upload {
 // UploadFile 上传文件
 func (u Upload) UploadFile(c *gin.Context) {
 	response := app.NewResponse(c)
+	// c.Request.FormFile 读取入参 file 字段的上传文件信息
 	file, fileHeader, err := c.Request.FormFile("file")
 	if err != nil {
 		response.ToErrorResponse(errcode.InvalidParams.WithDetails(err.Error()))
