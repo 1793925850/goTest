@@ -7,6 +7,7 @@ package routers
 import (
 	_ "blog-service/docs"
 	"blog-service/internal/middleware"
+	"blog-service/internal/routers/api"
 	"blog-service/internal/routers/api/v1"
 
 	"github.com/gin-gonic/gin"
@@ -25,6 +26,9 @@ func NewRouter() *gin.Engine {
 
 	tag := v1.NewTag()
 	article := v1.NewArticle()
+	upload := api.NewUpload()
+
+	r.POST("/upload/file", upload.UploadFile)
 
 	// 一个路由组里可以添加所有具有通用中间件或相同路径前缀的路由
 	apiv1 := r.Group("/api/v1")
