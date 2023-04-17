@@ -47,6 +47,6 @@ func (u Upload) UploadFile(c *gin.Context) {
 	}
 
 	response.ToResponse(gin.H{
-		"file_access_url": fileInfo.AccessUrl,
+		"file_access_url": fileInfo.AccessUrl, // 返回文件的展示地址
 	})
 }
