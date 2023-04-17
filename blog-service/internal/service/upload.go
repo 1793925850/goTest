@@ -12,11 +12,13 @@ import (
 业务层，上传文件服务
 */
 
+// FileInfo 文件信息
 type FileInfo struct {
 	Name      string
 	AccessUrl string
 }
 
+// UploadFile 上传文件
 func (svc *Service) UploadFile(fileType upload.FileType, file multipart.File, fileHeader *multipart.FileHeader) (*FileInfo, error) {
 	fileName := upload.GetFileName(fileHeader.Filename)
 	if !upload.CheckContainExt(fileType, fileName) {
