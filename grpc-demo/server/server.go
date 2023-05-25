@@ -21,6 +21,14 @@ func (s *GreeterServer) SayHello(ctx context.Context, r *pb.HelloRequest) (*pb.H
 	return &pb.HelloReply{Message: "hello.world"}, nil
 }
 
+func (s *GreeterServer) SayList(r *pb.HelloRequest, stream pb.Greeter_SayListServer) error {
+	for n := 0; n <= 6; n++ {
+		_ = stream.Send(&pb.HelloReply{Message: "hello.list"})
+	}
+
+	return nil
+}
+
 func main() {
 	server := grpc.NewServer()                         // 创建服务器实例
 	pb.RegisterGreeterServer(server, &GreeterServer{}) // 在该服务器上注册 RPC服务（即 Greeter）
