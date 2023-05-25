@@ -23,7 +23,7 @@ func main() {
 	defer conn.Close()
 
 	client := pb.NewGreeterClient(conn) // 创建 服务Greeter 的客户端对象
-	_ = SayList(client)                 // 发送 RPC 请求，等待同步响应，得到回调后返回响应结果
+	_ = SayRoute(client)                // 发送 RPC 请求，等待同步响应，得到回调后返回响应结果
 }
 
 func SayHello(client pb.GreeterClient) error {
@@ -45,6 +45,37 @@ func SayList(client pb.GreeterClient) error {
 
 		log.Printf("resp: %v", resp)
 	}
+
+	return nil
+}
+
+func SayRecord(client pb.GreeterClient) error {
+	stream, _ := client.SayRecord(context.Background())
+	for n := 0; n <= 6; n++ {
+		_ = stream.Send(&pb.HelloRequest{Name: "JinXiao"})
+	}
+	resp, _ := stream.CloseAndRecv()
+
+	log.Printf("resp err: %v", resp)
+	return nil
+}
+
+func SayRoute(client pb.GreeterClient) error {
+	stream, _ := client.SayRoute(context.Background())
+	for n := 0; n <= 6; n++ {
+		_ = stream.Send(&pb.HelloRequest{Name: "JinXiao"}) // 首个请求一定是由客户端发送的
+		resp, err := stream.Recv()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			return err
+		}
+
+		log.Printf("resp err: %v", resp)
+	}
+
+	_ = stream.CloseSend()
 
 	return nil
 }
