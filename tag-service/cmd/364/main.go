@@ -8,6 +8,7 @@ import (
 	"golang.org/x/net/http2/h2c"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+	"log"
 	"net/http"
 	"strings"
 	pb "tag-service/proto"
@@ -21,12 +22,14 @@ func init() {
 	flag.Parse()
 }
 
-const SERVICE_NAME = "tag-service"
-
 func main() {
-
+	err := RunServer(port)
+	if err != nil {
+		log.Fatalf("Run Serve err: %v", err)
+	}
 }
 
+// RunServer 包含所有路由的服务器
 func RunServer(port string) error {
 	httpMux := runHttpServer() // 运行 HTTP 的路由
 	grpcS := runGrpcServer()   // 运行 gRPC 服务
