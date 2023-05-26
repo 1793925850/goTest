@@ -19,6 +19,7 @@ func init() {
 	flag.Parse()
 }
 
+// http 和 gRPC 都用同一个端口，但是需要的方法是互不相干的
 func main() {
 	l, err := RunTCPServer(port)
 	if err != nil {
