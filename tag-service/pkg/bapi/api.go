@@ -53,15 +53,15 @@ func NewAPI(url string) *API {
 }
 
 func (a *API) GetTagList(ctx context.Context, name string) ([]byte, error) {
-	token, err := a.getAccessToken(ctx)
-	if err != nil {
-		return nil, err
-	}
+	//token, err := a.getAccessToken(ctx)
+	//if err != nil {
+	//	return nil, err
+	//}
 
 	body, err := a.httpGet(ctx, fmt.Sprintf(
-		"%s?token=%s&name=%s",
+		"%s?token=%s",
 		"api/v1/tags",
-		token,
+		//token,
 		name,
 	))
 	if err != nil {
