@@ -6,8 +6,11 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"log"
+	"runtime/debug"
+	"tag-service/pkg/errcode"
 	pb "tag-service/proto"
 	"tag-service/server"
+	"time"
 )
 
 func RunGrpcServer() *grpc.Server {
@@ -16,8 +19,9 @@ func RunGrpcServer() *grpc.Server {
 	opts := []grpc.ServerOption{
 		// 添加嵌套拦截器
 		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
-			HelloInterceptor,
-			WorldInterceptor,
+			AccessLog,
+			ErrorLog,
+			Recovery,
 		)),
 	}
 	// 构建gRPC服务器
@@ -43,4 +47,43 @@ func WorldInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServ
 	log.Println("世界")
 
 	return resp, err
+}
+
+// AccessLog 访问日志
+func AccessLog(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
+	requestLog := "访问请求日志: method: %s, 开始时间: %d, 请求: %v"
+	beginTime := time.Now().Local().Unix()
+	log.Printf(requestLog, info.FullMethod, beginTime, req)
+
+	resp, err := handler(ctx, req)
+
+	responLog := "访问响应日志: method: %s, 开始时间: %d, 响应: %v"
+	endTime := time.Now().Local().Unix()
+	log.Printf(responLog, info.FullMethod, endTime, resp)
+
+	return resp, err
+}
+
+// ErrorLog 错误日志
+func ErrorLog(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
+	resp, err := handler(ctx, req)
+	if err != nil {
+		errLog := "错误日志: method: %s, code: %v, message: %v, details: %v"
+		s := errcode.FromError(err)
+		log.Printf(errLog, info.FullMethod, s.Code(), s.Err().Error(), s.Details())
+	}
+
+	return resp, err
+}
+
+// Recovery 异常捕获
+func Recovery(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
+	defer func() {
+		if e := recover(); e != nil {
+			recoveryLog := "recovery log: method: %s, message: %v, stack: %s"
+			log.Printf(recoveryLog, info.FullMethod, e, string(debug.Stack()[:]))
+		}
+	}()
+
+	return handler(ctx, req)
 }
