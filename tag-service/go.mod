@@ -3,6 +3,7 @@ module tag-service
 go 1.20
 
 require (
+	github.com/elazarl/go-bindata-assetfs v1.0.1 // indirect
 	github.com/fullstorydev/grpcurl v1.8.7 // indirect
 	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/go-bindata/go-bindata v3.1.2+incompatible // indirect
