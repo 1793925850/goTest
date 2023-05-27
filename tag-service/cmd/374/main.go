@@ -11,6 +11,7 @@ import (
 	"google.golang.org/grpc/reflection"
 	"log"
 	"net/http"
+	"path"
 	"strings"
 	"tag-service/pkg/swagger"
 	pb "tag-service/proto"
@@ -61,6 +62,18 @@ func runHttpServer() *http.ServeMux {
 		Prefix:   "third_party/swagger-ui",
 	})
 	serveMux.Handle(prefix, http.StripPrefix(prefix, fileServer))
+	serveMux.HandleFunc("/swagger/", func(writer http.ResponseWriter, request *http.Request) {
+		if !strings.HasSuffix(request.URL.Path, "swagger.json") {
+			http.NotFound(writer, request)
+			return
+		}
+
+		p := strings.TrimPrefix(request.URL.Path, "/swagger/")
+		p = path.Join("proto", p)
+
+		// http://127.0.0.1:8004/swagger/tag.swagger.json
+		http.ServeFile(writer, request, p)
+	})
 
 	return serveMux
 
