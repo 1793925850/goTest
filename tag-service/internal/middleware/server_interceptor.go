@@ -3,11 +3,15 @@ package middleware
 import (
 	"context"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	"github.com/opentracing/opentracing-go"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/reflection"
 	"log"
 	"runtime/debug"
+	"tag-service/global"
 	"tag-service/pkg/errcode"
+	"tag-service/pkg/metatext"
 	pb "tag-service/proto"
 	"tag-service/server"
 	"time"
@@ -86,4 +90,15 @@ func Recovery(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, 
 	}()
 
 	return handler(ctx, req)
+}
+
+// ServerTracing 链路追踪
+func ServerTracing(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
+	// 从提供的上下文中获得元数据，如果没有就创建
+	md, ok := metadata.FromIncomingContext(ctx)
+	if !ok {
+		md = metadata.New(nil)
+	}
+
+	parentSpanContext, _ := global.Tracer.Extract(opentracing.TextMap, metatext.MetadataTextMap{md})
 }
