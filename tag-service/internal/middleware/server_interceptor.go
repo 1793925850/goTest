@@ -4,6 +4,7 @@ import (
 	"context"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	"github.com/opentracing/opentracing-go"
+	"github.com/opentracing/opentracing-go/ext"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/reflection"
@@ -101,4 +102,15 @@ func ServerTracing(ctx context.Context, req interface{}, info *grpc.UnaryServerI
 	}
 
 	parentSpanContext, _ := global.Tracer.Extract(opentracing.TextMap, metatext.MetadataTextMap{md})
+	spanOpts := []opentracing.StartSpanOption{
+		opentracing.Tag{Key: string(ext.Component), Value: "gRPC"},
+		ext.SpanKindRPCServer,
+		ext.RPCServerOption(parentSpanContext),
+	}
+	span := global.Tracer.StartSpan(info.FullMethod, spanOpts...)
+	defer span.Finish()
+
+	ctx = opentracing.ContextWithSpan(ctx, span)
+
+	return handler(ctx, req)
 }
