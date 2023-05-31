@@ -50,6 +50,7 @@ func ClientTracing() grpc.UnaryClientInterceptor {
 	return func(ctx context.Context, method string, req, reply interface{}, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
 		var parentCtx opentracing.SpanContext
 		var spanOpts []opentracing.StartSpanOption
+		// SpanFromContext 解析上下文信息，检查其是否包含上一级的跨度信息
 		var parentSpan = opentracing.SpanFromContext(ctx)
 
 		if parentSpan != nil {
