@@ -13,7 +13,11 @@ require (
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0 // indirect
 	github.com/jhump/protoreflect v1.12.0 // indirect
 	github.com/jteeuwen/go-bindata v3.0.7+incompatible // indirect
+	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/soheilhy/cmux v0.1.5 // indirect
+	github.com/uber/jaeger-client-go v2.30.0+incompatible // indirect
+	github.com/uber/jaeger-lib v2.4.1+incompatible // indirect
+	go.uber.org/atomic v1.11.0 // indirect
 	golang.org/x/net v0.10.0 // indirect
 	golang.org/x/sys v0.8.0 // indirect
 	golang.org/x/text v0.9.0 // indirect
