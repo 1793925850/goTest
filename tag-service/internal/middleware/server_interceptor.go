@@ -27,6 +27,7 @@ func RunGrpcServer() *grpc.Server {
 			AccessLog,
 			ErrorLog,
 			Recovery,
+			ServerTracing,
 		)),
 	}
 	// 构建gRPC服务器
