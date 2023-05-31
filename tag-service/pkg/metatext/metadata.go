@@ -5,6 +5,10 @@ import (
 	"strings"
 )
 
+/**
+基于 TextMap 模式，对照实现了 metadata 的设置和读取方法
+*/
+
 type MetadataTextMap struct {
 	metadata.MD
 }
