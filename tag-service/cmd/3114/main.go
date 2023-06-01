@@ -42,6 +42,7 @@ func RunServer(port string) error {
 	endPoint := "0.0.0.0:" + port
 	gwmux := runtime.NewServeMux()
 	dopts := []grpc.DialOption{grpc.WithInsecure()}
+	// 将 TagService 服务注册到网关上
 	_ = pb.RegisterTagServiceHandlerFromEndpoint(context.Background(), gwmux, endPoint, dopts)
 	// 让所有的HTTP请求进入网关，网关在处理请求中的信息之后才会与目标服务器建立连接，所以要有个空闲的指向网址
 	httpMux.Handle("/", gwmux)
@@ -57,6 +58,7 @@ func RunServer(port string) error {
 	defer etcdClient.Close()
 
 	target := fmt.Sprintf("/etcdv3://service/grpc/%s", SERVICE_NAME)
+	// etcd上的服务注册
 	grpcproxy.Register(etcdClient, target, ":"+port, 60)
 
 	return http.ListenAndServe(":"+port, grpcHandlerFunc(grpcS, httpMux))
