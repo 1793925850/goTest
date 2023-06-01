@@ -13,6 +13,7 @@ import (
 	"golang.org/x/net/http2/h2c"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+	"log"
 	"net/http"
 	"path"
 	"strings"
@@ -32,7 +33,12 @@ func init() {
 	flag.Parse()
 }
 
-func main() {}
+func main() {
+	err := RunServer(port)
+	if err != nil {
+		log.Fatalf("Run Serve err: %v", err)
+	}
+}
 
 // RunServer 服务器启动
 func RunServer(port string) error {
