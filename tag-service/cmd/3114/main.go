@@ -53,6 +53,7 @@ func RunServer(port string) error {
 	// 让所有的HTTP请求进入网关，网关在处理请求中的信息之后才会与目标服务器建立连接，所以要有个空闲的指向网址
 	httpMux.Handle("/", gwmux)
 
+	// 把服务的相关信息存到etcd数据库上
 	// etcd部分，服务发现
 	etcdClient, err := clientv3.New(clientv3.Config{
 		Endpoints:   []string{"http://localhost:2379"},
